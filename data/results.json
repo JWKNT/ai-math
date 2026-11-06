@@ -118,5 +118,15 @@
     "slug": "multiplication-below-n-log-n",
     "title": "Multiplying Faster Than n log n",
     "description": "What it means to multiply two numbers in fewer than n log n steps, and how small the saving is."
+  },
+  {
+    "slug": "connes-rigidity",
+    "title": "Connes Rigidity Conjecture",
+    "description": "Whether the von Neumann algebra of a group with property (T) remembers the group."
+  },
+  {
+    "slug": "nine-loop-amplitude",
+    "title": "Nine-Loop Amplitude",
+    "description": "What it means to compute how six particles scatter at nine loops."
   }
 ]

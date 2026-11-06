@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import { renderAiMath, typesetMath, mathChars, validateAiMath } from '../lib/pages.mjs';
-import { APSP_EDGES, BUTTERFLY_DIGITS, EHRHART_TRIANGLE, ES_EDGES, ES_TREE, PETERSEN_COVER, PETERSEN_EDGES, SENDOV_ZEROS, UG_CONSTRAINTS, UG_VALUES, ZETA_ZEROS, butterflyRounds, deltoidNeedle, deltoidPoint, figures, k5Color, paleyMatrix, rangePoint, sendovCritical } from '../lib/figures.mjs';
+import { APSP_EDGES, BUTTERFLY_DIGITS, EHRHART_TRIANGLE, ES_EDGES, ES_TREE, PETERSEN_COVER, PETERSEN_EDGES, SENDOV_ZEROS, UG_CONSTRAINTS, UG_VALUES, ZETA_ZEROS, addPositions, butterflyRounds, deltoidNeedle, deltoidPoint, figures, fishnetGraph, k5Color, paleyMatrix, rangePoint, sendovCritical } from '../lib/figures.mjs';
 
 const root = new URL('../', import.meta.url);
 const results = JSON.parse(await readFile(new URL('data/results.json', root), 'utf8'));
@@ -593,6 +593,76 @@ test('Multiplication page: the rounds, the divisors and the network', () => {
   assert.equal(perList.toFixed(2), '72.64');
   assert.equal((Math.log(perList) / Math.log(73)).toFixed(4), '0.9989');
   quotes('multiplication-below-n-log-n', '31,415,926', '10^{18}', '30 billion', '2^{-182}', '2^{2^{182}}', '0.00006', '2^{16{,}665}', '0.0031', '2^{320}', '2^{266}', '14,336', '1,046,528', '1,041,408', '72.64', 'r^{0.9989}');
+});
+
+test('Connes page: the worked sums, the Fourier lists and the carry hold', () => {
+  // A sum p + qs multiplies by the group rule, and its pair (p + q, p - q) multiplies position by position.
+  const times = ([p, q], [r, t]) => [p * r + q * t, p * t + q * r], pair = ([p, q]) => [p + q, p - q];
+  assert.deepEqual(times([2, 3], [4, 5]), [23, 22]);
+  assert.deepEqual([pair([2, 3]), pair([4, 5]), pair([23, 22])], [[5, -1], [9, -1], [45, 1]]);
+  for (const a of [[1, 2], [-3, 5], [7, 0]]) for (const b of [[2, 2], [0, -4]]) {
+    const [u, v] = pair(a), [x, y] = pair(b);
+    assert.deepEqual(pair(times(a, b)), [u * x + 0, v * y + 0]);
+  }
+
+  // Both groups with 4 actions give lists of 4 numbers, multiplied position by position. The clock needs i.
+  const complexTimes = ([a, b], [c, d]) => [a * c - b * d + 0, a * d + b * c + 0], iPower = k => [[1, 0], [0, 1], [-1, 0], [0, -1]][k % 4];
+  const clockList = sum => [0, 1, 2, 3].map(j => sum.reduce(([re, im], n, k) => { const [c, s] = iPower(j * k); return [re + n * c, im + n * s]; }, [0, 0]));
+  const clockTimes = (a, b) => [0, 1, 2, 3].map(k => a.reduce((total, n, m) => total + n * b[(k - m + 4) % 4], 0));
+  const switchesList = sum => [0, 1, 2, 3].map(j => sum.reduce((total, n, k) => total + n * (-1) ** ((j & 1) * (k & 1) + (j >> 1) * (k >> 1)), 0));
+  const switchesTimes = (a, b) => [0, 1, 2, 3].map(k => a.reduce((total, n, m) => total + n * b[k ^ m], 0));
+  for (const [a, b] of [[[1, 2, 3, 4], [5, -1, 0, 2]], [[0, 1, 0, 0], [2, 7, -3, 1]]]) {
+    assert.deepEqual(clockList(clockTimes(a, b)), clockList(a).map((value, j) => complexTimes(value, clockList(b)[j])));
+    assert.deepEqual(switchesList(switchesTimes(a, b)), switchesList(a).map((value, j) => value * switchesList(b)[j]));
+  }
+
+  // The carry rule is binary addition of x + 2y, and the two rules differ in how fast a position returns.
+  const positions = [[0, 0], [1, 0], [0, 1], [1, 1]], number = ([x, y]) => x + 2 * y;
+  const steps = (carry, start) => { let at = start, n = 0; do { at = addPositions(carry, at, [1, 0]); n++; } while (number(at) !== number(start)); return n; };
+  for (const a of positions) {
+    for (const b of positions) assert.equal(number(addPositions(true, a, b)), (number(a) + number(b)) % 4);
+    assert.equal(steps(false, a), 2);
+    assert.equal(steps(true, a), 4);
+  }
+  assert.ok(figures.carry().includes('back in 2 steps') && figures.carry().includes('back in 4 steps'));
+
+  // Turning the kth plane by 1/k degrees moves a far arrow by little, and every arrow moves by something.
+  const moved = k => 2 * Math.sin(Math.PI / 360 / k);
+  assert.ok(moved(1000) < 0.00002 && moved(1000) > 0);
+  quotes('connes-rigidity', '23 + 22s', '(5, -1)', '(9, -1)', '(45, 1)', 'x + 2y', 'SL_3(\\mathbb{Z})');
+});
+
+test('Nine-loop page: the diagram, the word counts and the quoted numbers hold', () => {
+  const { vertices, edges, legs } = fishnetGraph(), same = ([a, b], [c, d]) => a === c && b === d;
+  assert.equal(edges.length - vertices.length + 1, 9);
+  assert.equal(legs.length, 6);
+  // A meeting of 3 lines carries one power of g and a meeting of 4 carries two. Six particles start at g^4, and nine loops add g^18.
+  const degree = v => edges.filter(edge => edge.some(end => same(end, v))).length + legs.filter(leg => same(leg, v)).length;
+  assert.ok(vertices.every(v => [3, 4].includes(degree(v))));
+  assert.equal(vertices.reduce((total, v) => total + degree(v) - 2, 0), 4 + 18);
+
+  assert.equal(9n ** 18n, 150094635296999121n);
+  assert.equal(9n ** 13n, 2541865828329n);
+  assert.equal(424 * 5431, 2302744);
+
+  // The values at u = v = w = 1: Dixon and Liu, table 5, and the published nine-loop file.
+  const E8 = -47748904.85, E9 = 673807654.7340449;
+  assert.equal((E8 / 1e6).toFixed(1), '-47.7');
+  assert.equal(Math.round(E9 / 1e6), 674);
+  assert.equal((E9 / E8).toFixed(7), '-14.1114787');
+  assert.equal((E9 / 100 ** 9).toPrecision(2), '6.7e-10');
+
+  // The sample word obeys the stated rules, and its fraction gives the two published remainders.
+  const word = [...'bbfddedfbdfaafefde'];
+  const banned = new Set(['ab', 'ba', 'ac', 'ca', 'bc', 'cb', 'ad', 'da', 'be', 'eb', 'cf', 'fc']);
+  assert.equal(word.length, 18);
+  assert.ok('abc'.includes(word[0]));
+  assert.ok(word.slice(1).every((character, i) => !banned.has(word[i] + character)));
+  const power = (base, exponent, p) => { let out = 1n; for (base %= p; exponent; exponent >>= 1n, base = base * base % p) if (exponent & 1n) out = out * base % p; return out; };
+  const residue = p => ((-105757n % p + p) * power(65536n, p - 2n, p)) % p;
+  assert.equal(residue(2147483647n), 829521918n);
+  assert.equal(residue(2147483629n), 1173913588n);
+  quotes('nine-loop-amplitude', 'bbfddedfb<wbr>dfaafefde', '-47.7', '674 million', '0.00000000067', '9^{18}', '150 quadrillion', '-105{,}757/65{,}536', '5,431', '2.5 trillion', '424 \\times 5{,}431', '2,302,744', '107,053');
 });
 
 test('figures are named, stay on theme tokens and contain no raw color', async () => {
