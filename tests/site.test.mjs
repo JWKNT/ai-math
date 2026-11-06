@@ -93,11 +93,10 @@ test('original prose stays within the writing policy limits', () => {
 
 // Every page assumes the same baseline: whole and negative numbers, fractions, decimals, percentages,
 // whole-number powers, square roots, letters for numbers, simple equations, points on a grid, simple shapes,
-// and the words proof, theorem and conjecture. A reader can land on any page from a link, so a page defines
-// each other term that it uses.
+// and the words proof, theorem, conjecture and hypothesis. A reader can land on any page from a link, so a
+// page defines each other term that it uses.
 const withoutLinks = html => html.replace(/href="[^"]*"/g, '');
 const STANDARD_DEFINITIONS = [
-  [/\bhypothes[ie]s\b/i, 'A hypothesis is a statement that nobody has proved yet.'],
   [/\bpolynomial/i, 'A <dfn>polynomial</dfn> is a formula that only adds and multiplies numbers and letters'],
   [/\bmatri(?:x|ces)\b/i, 'A <dfn>matrix</dfn> is a table of numbers'],
   [/\bcomplex number/i, 'A <dfn>complex number</dfn> has the form \\(a + bi\\), where \\(i^2 = -1\\). It is a point on a flat map, with \\(a\\) across and \\(b\\) up.'],
