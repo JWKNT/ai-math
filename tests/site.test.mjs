@@ -142,14 +142,16 @@ class Q {
 const isqrt = n => { let x = n, y = (x + 1n) / 2n; while (y < x) { x = y; y = (x + n / x) / 2n; } return x; };
 
 test('Diophantine page: the sizes and the worked tests', () => {
-  // The published equation has variable 0 and 12,503 more. Its largest coefficient is below 2^80.
-  assert.equal(12503 + 1, 12504);
-  const largest = 685783949153203534233601n;
-  assert.equal(String(largest).length, 24);
-  assert.ok(largest < 2n ** 80n);
+  // The published equation has variable 0 and 961 more, and its largest number is 64 times 3 to the power 2^28.
+  assert.equal(961 + 1, 962);
+  assert.equal(Math.floor(2 ** 28 * Math.log10(3) + Math.log10(64)) + 1, 128076264);
+  // The version with every number written out has a largest number below 2^80.
+  const written = 685783949153203534233890n;
+  assert.equal(String(written).length, 24);
+  assert.ok(written < 2n ** 80n);
   assert.ok(Q.of(3, 4).mul(Q.of(4, 3)).eq(Q.of(1)));
   assert.ok(Q.of(3, 2).pow(2).eq(Q.of(9, 4)));
-  quotes('z-diophantine-in-q', '12,504 variables', '12,503 extra variables', 'highest power is 4', '135,721 terms', '24 digits', '11,939', '9/4');
+  quotes('z-diophantine-in-q', '962 variables', '961 extra variables', 'highest power is 4', '55,409 terms', '64 \\times 3^{2^{28}}', '128 million digits', '4,973 variables', '24 digits', '919 squares', '9/4');
 });
 
 test('ETH page: the settings, the years and the threshold', () => {
