@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="How large a balanced convex shape can be with one lattice point inside.">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Ehrhart Volume Conjecture">
+    <meta property="og:description" content="How large a balanced convex shape can be with one lattice point inside.">
+    <meta property="og:url" content="https://jehlp.net/ai-math/ehrhart-volume/">
+    <meta property="og:site_name" content="jehlp.net">
+    <meta name="theme-color" content="#fbfaf7">
+    <link rel="canonical" href="https://jehlp.net/ai-math/ehrhart-volume/">
+    <title>Ehrhart Volume Conjecture · AI Math Results · jehlp.net</title>
+    <link rel="icon" href="https://jehlp.net/site-theme/v2/favicons/ai-math.png" type="image/png">
+    <script src="https://jehlp.net/site-theme/v2/theme.js?v=20261009-reading-folio"></script>
+    <link rel="stylesheet" href="https://jehlp.net/site-theme/v2/base.css?v=20261009-reading-folio">
+    <link rel="stylesheet" href="https://jehlp.net/site-theme/v2/components.css?v=20261105-math3">
+    <link rel="stylesheet" href="../assets/styles.css?v=20261105-plain2">
+    <script src="https://jehlp.net/site-theme/v2/components.js?v=20261105-math3" defer></script>
+  </head>
+  <body data-site-tone="blue">
+    <a class="skip-link" href="#explainer">Skip to the explanation</a>
+    <header class="site-header site-header--identity">
+      <div class="site-brand"><img class="site-mark" src="https://jehlp.net/site-theme/v2/marks/ai-math.png" width="32" height="32" alt=""><span class="site-title">AI Math Results</span></div>
+      <nav aria-label="Site links"><a href="../">All results</a><span class="site-utility-pair"><a class="site-home" href="https://jehlp.net/" aria-label="Home — jehlp.net" title="Home — jehlp.net"><span aria-hidden="true">✳</span></a><button class="theme-toggle" type="button" data-theme-toggle aria-label="Use dark theme" aria-pressed="false">◐</button></span></nav>
+    </header>
+    <main id="explainer" class="ai-math-shell" tabindex="-1">
+      <article class="prose ai-math-article">
+        <h1>Ehrhart Volume Conjecture</h1>
+<p>Mark every point with whole-number coordinates on graph paper. These points form a <dfn>lattice</dfn>. A shape is <dfn>convex</dfn> if it has no dents, so the straight line between any two of its points stays inside it. The same words apply in <math><mi>n</mi></math> dimensions, where a point is a list of <math><mi>n</mi></math> numbers.</p>
+<p>Here is the question. Draw a convex shape around the origin, so that the origin is the only lattice point strictly inside. Lattice points on the edge do not count. The question is how large the shape can be.</p>
+<p>With no other rule, there is no limit. Take a triangle with corners <span class="ai-math-nobreak"><math><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mo form="prefix" stretchy="false">−</mo><mn>1</mn><mi>/</mi><mi>L</mi><mo fence="true" form="postfix" stretchy="false">)</mo></mrow></math>,</span> <math><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mo form="prefix" stretchy="false">−</mo><mi>L</mi><mo separator="true">,</mo><mn>1</mn><mo fence="true" form="postfix" stretchy="false">)</mo></mrow></math> and <span class="ai-math-nobreak"><math><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mi>L</mi><mo separator="true">,</mo><mn>1</mn><mo fence="true" form="postfix" stretchy="false">)</mo></mrow></math>,</span> for a large number <span class="ai-math-nobreak"><math><mi>L</mi></math>.</span> Inside it, the only lattice points can have height 0, and it is so narrow at that height that only the origin fits. Its area is <span class="ai-math-nobreak"><math><mrow><mi>L</mi><mo>+</mo><mn>1</mn></mrow></math>,</span> so it can be as large as you like. But the triangle is lopsided, with almost all of its area above the origin.</p>
+<figure class="ai-math-side">
+<svg viewBox="0 0 280 276" role="img" aria-label="A grid of lattice points and a triangle with corners at minus one, minus one, at two, minus one, and at minus one, two. The origin is the only lattice point strictly inside" preserveAspectRatio="xMinYMin meet"><polygon class="fig-band" points="62,208 212,208 62,58"/><polygon class="fig-line-closed" points="62,208 212,208 62,58"/><circle class="fig-dot" cx="12" cy="258" r="2.4"/><circle class="fig-dot" cx="12" cy="208" r="2.4"/><circle class="fig-dot" cx="12" cy="158" r="2.4"/><circle class="fig-dot" cx="12" cy="108" r="2.4"/><circle class="fig-dot" cx="12" cy="58" r="2.4"/><circle class="fig-dot" cx="12" cy="8" r="2.4"/><circle class="fig-dot" cx="62" cy="258" r="2.4"/><circle class="fig-dot" cx="62" cy="208" r="2.4"/><circle class="fig-dot" cx="62" cy="158" r="2.4"/><circle class="fig-dot" cx="62" cy="108" r="2.4"/><circle class="fig-dot" cx="62" cy="58" r="2.4"/><circle class="fig-dot" cx="62" cy="8" r="2.4"/><circle class="fig-dot" cx="112" cy="258" r="2.4"/><circle class="fig-dot" cx="112" cy="208" r="2.4"/><circle class="fig-dot" cx="112" cy="108" r="2.4"/><circle class="fig-dot" cx="112" cy="58" r="2.4"/><circle class="fig-dot" cx="112" cy="8" r="2.4"/><circle class="fig-dot" cx="162" cy="258" r="2.4"/><circle class="fig-dot" cx="162" cy="208" r="2.4"/><circle class="fig-dot" cx="162" cy="158" r="2.4"/><circle class="fig-dot" cx="162" cy="108" r="2.4"/><circle class="fig-dot" cx="162" cy="58" r="2.4"/><circle class="fig-dot" cx="162" cy="8" r="2.4"/><circle class="fig-dot" cx="212" cy="258" r="2.4"/><circle class="fig-dot" cx="212" cy="208" r="2.4"/><circle class="fig-dot" cx="212" cy="158" r="2.4"/><circle class="fig-dot" cx="212" cy="108" r="2.4"/><circle class="fig-dot" cx="212" cy="58" r="2.4"/><circle class="fig-dot" cx="212" cy="8" r="2.4"/><circle class="fig-dot" cx="262" cy="258" r="2.4"/><circle class="fig-dot" cx="262" cy="208" r="2.4"/><circle class="fig-dot" cx="262" cy="158" r="2.4"/><circle class="fig-dot" cx="262" cy="108" r="2.4"/><circle class="fig-dot" cx="262" cy="58" r="2.4"/><circle class="fig-dot" cx="262" cy="8" r="2.4"/><circle class="fig-dot-accent" cx="112" cy="158" r="4.6"/><text class="fig-note-accent" x="121" y="151">(0, 0)</text><text class="fig-note" x="54" y="225" text-anchor="middle">(−1, −1)</text><text class="fig-note" x="216" y="225" text-anchor="middle">(2, −1)</text><text class="fig-note" x="62" y="47" text-anchor="middle">(−1, 2)</text></svg>
+<figcaption>This triangle has area <span class="ai-math-nobreak"><math><mrow><mn>9</mn><mi>/</mi><mn>2</mn></mrow></math>,</span> exactly the limit for <span class="ai-math-nobreak"><math><mrow><mi>n</mi><mo>=</mo><mn>2</mn></mrow></math>.</span> Its balance point is the origin, and the origin is the only lattice point strictly inside.</figcaption>
+</figure>
+<p>Ehrhart's rule removes such shapes. The <dfn>centroid</dfn> of a shape is its balance point. For a triangle, it is the average of the three corners. The rule says that the centroid must be the origin. The <dfn>Ehrhart volume conjecture</dfn> says that such a shape in <math><mi>n</mi></math> dimensions has volume at most:</p>
+<div class="ui-equation" data-scroll-region data-scroll-noun="of the formula" aria-label="Formula"><math display="block" class="tml-display" style="display:block math;"><mfrac><msup><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo fence="true" form="postfix" stretchy="false">)</mo></mrow><mi>n</mi></msup><mrow><mi>n</mi><mo form="postfix" stretchy="false" lspace="0em" rspace="0em">!</mo></mrow></mfrac></math></div>
+<p>Here <span class="ai-math-nobreak"><math><mrow><mi>n</mi><mo form="postfix" stretchy="false">!</mo><mo>=</mo><mn>1</mn><mo>×</mo><mn>2</mn><mo>×</mo><mi>⋯</mi><mo>×</mo><mi>n</mi></mrow></math>,</span> and volume means area when <span class="ai-math-nobreak"><math><mrow><mi>n</mi><mo>=</mo><mn>2</mn></mrow></math>.</span> A conjecture is a statement that nobody has proved yet.</p>
+<p>For <span class="ai-math-nobreak"><math><mrow><mi>n</mi><mo>=</mo><mn>2</mn></mrow></math>,</span> the limit is <span class="ai-math-nobreak"><math><mrow><msup><mn>3</mn><mn>2</mn></msup><mi>/</mi><mn>2</mn><mo>=</mo><mn>4.5</mn></mrow></math>.</span> The triangle in the figure has exactly this area, and the average of its corners is the origin. So the limit cannot go lower. The same pattern of corners reaches the limit in every dimension.</p>
+<p>There was already a limit for a smaller family of shapes. Minkowski's theorem covers shapes that look the same after a half turn around the origin. Their volume is at most <span class="ai-math-nobreak"><math><msup><mn>2</mn><mi>n</mi></msup></math>,</span> and the square from <math><mrow><mo form="prefix" stretchy="false">−</mo><mn>1</mn></mrow></math> to <math><mn>1</mn></math> reaches it with area 4. All such shapes are balanced at the origin, so Ehrhart's conjecture covers them and many more:</p>
+<div class="table-scroll" data-scroll-region aria-label="Volume limits in several dimensions">
+<table class="ui-table">
+<thead><tr><th scope="col">Dimension <math><mi>n</mi></math></th><th scope="col">Half-turn shapes</th><th scope="col">Balanced shapes</th></tr></thead>
+<tbody>
+<tr><td>2</td><td>4</td><td>4.5</td></tr>
+<tr><td>3</td><td>8</td><td>10.67</td></tr>
+<tr><td>4</td><td>16</td><td>26.04</td></tr>
+<tr><td>10</td><td>1,024</td><td>7,147.66</td></tr>
+</tbody>
+</table>
+</div>
+<p>For large <span class="ai-math-nobreak"><math><mi>n</mi></math>,</span> the limit for balanced shapes grows by a factor of about 2.7 with each new dimension. Earlier proofs for all balanced shapes only reached limits based on <span class="ai-math-nobreak"><math><msup><mn>4</mn><mi>n</mi></msup></math>,</span> which grows far faster.</p>
+<p><a href="https://openai.com/index/ten-advances-in-mathematics/">OpenAI reports a proof</a> of the limit in every dimension, from an internal model. <a href="https://arxiv.org/abs/2608.01040">Jihao Liu reports</a> the remaining part, also with AI tools. The only shapes that reach the limit are the one in the figure and its images under maps that keep the lattice unchanged. The same holds in higher dimensions, with the same pattern of corners.</p>
+      </article>
+    </main>
+  </body>
+</html>

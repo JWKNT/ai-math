@@ -1,0 +1,25 @@
+<p>Mark every point with whole-number coordinates on graph paper. These points form a <dfn>lattice</dfn>. A shape is <dfn>convex</dfn> if it has no dents, so the straight line between any two of its points stays inside it. The same words apply in \(n\) dimensions, where a point is a list of \(n\) numbers.</p>
+<p>Here is the question. Draw a convex shape around the origin, so that the origin is the only lattice point strictly inside. Lattice points on the edge do not count. The question is how large the shape can be.</p>
+<p>With no other rule, there is no limit. Take a triangle with corners \((0, -1/L)\), \((-L, 1)\) and \((L, 1)\), for a large number \(L\). Inside it, the only lattice points can have height 0, and it is so narrow at that height that only the origin fits. Its area is \(L + 1\), so it can be as large as you like. But the triangle is lopsided, with almost all of its area above the origin.</p>
+<figure class="ai-math-side">
+{{fig:ehrhart}}
+<figcaption>This triangle has area \(9/2\), exactly the limit for \(n = 2\). Its balance point is the origin, and the origin is the only lattice point strictly inside.</figcaption>
+</figure>
+<p>Ehrhart's rule removes such shapes. The <dfn>centroid</dfn> of a shape is its balance point. For a triangle, it is the average of the three corners. The rule says that the centroid must be the origin. The <dfn>Ehrhart volume conjecture</dfn> says that such a shape in \(n\) dimensions has volume at most:</p>
+\[ \frac{(n + 1)^n}{n!} \]
+<p>Here \(n! = 1 \times 2 \times \cdots \times n\), and volume means area when \(n = 2\). A conjecture is a statement that nobody has proved yet.</p>
+<p>For \(n = 2\), the limit is \(3^2 / 2 = 4.5\). The triangle in the figure has exactly this area, and the average of its corners is the origin. So the limit cannot go lower. The same pattern of corners reaches the limit in every dimension.</p>
+<p>There was already a limit for a smaller family of shapes. Minkowski's theorem covers shapes that look the same after a half turn around the origin. Their volume is at most \(2^n\), and the square from \(-1\) to \(1\) reaches it with area 4. All such shapes are balanced at the origin, so Ehrhart's conjecture covers them and many more:</p>
+<div class="table-scroll" data-scroll-region aria-label="Volume limits in several dimensions">
+<table class="ui-table">
+<thead><tr><th scope="col">Dimension \(n\)</th><th scope="col">Half-turn shapes</th><th scope="col">Balanced shapes</th></tr></thead>
+<tbody>
+<tr><td>2</td><td>4</td><td>4.5</td></tr>
+<tr><td>3</td><td>8</td><td>10.67</td></tr>
+<tr><td>4</td><td>16</td><td>26.04</td></tr>
+<tr><td>10</td><td>1,024</td><td>7,147.66</td></tr>
+</tbody>
+</table>
+</div>
+<p>For large \(n\), the limit for balanced shapes grows by a factor of about 2.7 with each new dimension. Earlier proofs for all balanced shapes only reached limits based on \(4^n\), which grows far faster.</p>
+<p><a href="https://openai.com/index/ten-advances-in-mathematics/">OpenAI reports a proof</a> of the limit in every dimension, from an internal model. <a href="https://arxiv.org/abs/2608.01040">Jihao Liu reports</a> the remaining part, also with AI tools. The only shapes that reach the limit are the one in the figure and its images under maps that keep the lattice unchanged. The same holds in higher dimensions, with the same pattern of corners.</p>

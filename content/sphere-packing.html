@@ -1,0 +1,25 @@
+<p>Stack equal balls in space so that they do not overlap. The <dfn>density</dfn> of the stack is the share of space that the balls fill. The question is how large this share can be. In \(d\) dimensions, a point is a list of \(d\) numbers. A ball is the set of points within a fixed distance of a center. So a ball in 1 dimension is a line segment, and a ball in 2 dimensions is a disk.</p>
+<figure class="ai-math-side">
+{{fig:hex-packing}}
+<figcaption>In 2 dimensions, this arrangement is the best. It fills about 90.7% of the plane.</figcaption>
+</figure>
+<p>Exact answers are known in dimensions 1, 2, 3, 8 and 24. The last two come from very symmetric arrangements of points:</p>
+<div class="table-scroll" data-scroll-region aria-label="The largest possible density in five dimensions">
+<table class="ui-table">
+<thead><tr><th scope="col">Dimension \(d\)</th><th scope="col">Largest density</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>100%</td></tr>
+<tr><td>2</td><td>90.7%</td></tr>
+<tr><td>3</td><td>74.0%</td></tr>
+<tr><td>8</td><td>25.4%</td></tr>
+<tr><td>24</td><td>0.19%</td></tr>
+</tbody>
+</table>
+</div>
+<p>The density falls fast because a ball fills less and less of the box around it. A disk fills 78.5% of its square, and a ball fills 52.4% of its cube. In 10 dimensions, a ball fills only 0.25% of its box. So for large \(d\), it helps to write the density as a base number raised to the power \(d\).</p>
+<p>A lower limit is easy. Keep adding balls until no more fit. Then every point of space is within twice the radius of some center, because otherwise another ball would fit. So balls with twice the radius cover all of space. Doubling the radius multiplies the volume of a ball by \(2^d\), so the original balls fill at least \(0.5^d\) of space. The best packings known are not much better than this.</p>
+<p>An upper limit is harder, because it must hold for every possible arrangement. In 1978, Grigory Kabatiansky and Vladimir Levenshtein proved that no packing fills more than about \(0.6602^d\) of space when \(d\) is large. Later work only improved smaller factors, so this base stayed the same.</p>
+<p><a href="https://openai.com/index/ten-advances-in-mathematics/">OpenAI reports</a> a lower base, from an internal model. The new upper limit for large \(d\), ignoring smaller factors, is:</p>
+\[ \left( \sqrt{\frac{e}{2\pi}} \right)^{d} \approx 0.6577^{d} \]
+<p>Here \(e\) is about 2.718 and \(\pi\) is about 3.14159. The change looks small, but it multiplies with each dimension. In 1,000 dimensions, ignoring smaller factors, the new limit is about 40 times lower than the old one. So the true base lies somewhere between 0.5 and 0.6577.</p>
+<p>The result also shows where a whole method stops. The Cohn–Elkies method gets an upper limit from one carefully chosen function. It gave the exact answers in 8 and 24 dimensions. OpenAI's theorem shows that in high dimensions, this method reaches exactly the new base and no lower. So any lower base will need a different method.</p>

@@ -1,0 +1,23 @@
+<p>With ordinary numbers, if \(a \times a = 0\), then \(a = 0\). Actions on pairs of numbers do not obey this rule. Let \(A\) be the action that sends the pair \((x, y)\) to \((y, 0)\). If you do it twice, every pair becomes \((0, 0)\). So \(A^2 = 0\), although \(A\) itself is not zero. Actions of this kind are written as square tables of numbers, called matrices.</p>
+<p>An element is <dfn>nilpotent</dfn> if some power of it is zero. Nilpotent elements can add up to something that is not nilpotent. The table shows this for \(A\) and \(B\). Their sum swaps the two numbers. If you swap twice, you get the pair that you started with, so no power of the sum is zero.</p>
+<figure class="ai-math-side">
+<div class="table-scroll" data-scroll-region aria-label="Two nilpotent matrices and their sum">
+<table class="ui-table">
+<thead><tr><th scope="col">Name</th><th scope="col">Sends \((x, y)\) to</th><th scope="col">Twice gives</th></tr></thead>
+<tbody>
+<tr><td>\(A\)</td><td>\((y, 0)\)</td><td>\((0, 0)\)</td></tr>
+<tr><td>\(B\)</td><td>\((0, x)\)</td><td>\((0, 0)\)</td></tr>
+<tr><td>\(A + B\)</td><td>\((y, x)\)</td><td>\((x, y)\)</td></tr>
+<tr><td>\(BA\)</td><td>\((0, y)\)</td><td>\((0, y)\)</td></tr>
+</tbody>
+</table>
+</div>
+<figcaption>\(BA\) means \(A\) first, then \(B\). The last column shows each action done twice.</figcaption>
+</figure>
+<p>A <dfn>ring</dfn> is a set with addition and multiplication that obey the usual rules, except that \(xy\) and \(yx\) can differ. The whole numbers form a ring, and so do the \(2 \times 2\) matrices. A <dfn>left ideal</dfn> is a part of a ring with two properties. The sum of two of its members is a member. Any ring element times a member, with the ring element on the left, is a member.</p>
+<p>A left ideal is <dfn>nil</dfn> if all of its members are nilpotent. This demand is much stronger than the demand on one element. For example, \(A\) cannot belong to a nil left ideal of the matrices, because \(BA\) would also belong. The table shows that \(BA\) is not nilpotent, because doing it again changes nothing. So \(A\) and \(B\) do not settle the question, and nil left ideals exist only in stranger rings.</p>
+<p>The <dfn>Köthe conjecture</dfn> says that the sum of two nil left ideals is always nil. The sum is the set of all \(x + y\), with \(x\) in one ideal and \(y\) in the other. A conjecture is a statement that nobody has proved yet.</p>
+<p>The conjecture is false. <a href="https://arxiv.org/abs/2609.07996">Tom Adamczewski, Bernhard Böhmler and René Marczinzik</a> build a system \(N\) from two symbols, \(b\) and \(c\). Its elements are sums of products such as \(b^2 + 3bc\). Every element of \(N\) is nilpotent. But this \(2 \times 2\) table with entries from \(N\) is not nilpotent:</p>
+\[ W = \begin{pmatrix} b^2 + c &amp; bc \\ b &amp; c \end{pmatrix} \]
+<p>Now split \(W\) into two tables, one with only its left column and one with only its right column. All tables with entries from \(N\) and only a left column form a left ideal, and so do those with only a right column. Both are nil, because their powers are simple. If the left column is \(x, y\), the \(k\)th power has left column \(x^k, y x^{k-1}\), which reaches zero with the powers of \(x\). The right column works the same way, and the sum of the two ideals contains \(W\).</p>
+<p>GPT-6 Astra found the first construction, in an experiment that Adamczewski ran with a formal statement of the problem. Its <a href="https://github.com/tadamcz/koethe">proof</a> passes Lean, a computer program that checks each step of a proof. Böhmler and Marczinzik then wrote the account that people can read. <a href="https://arxiv.org/abs/2609.15080">A second paper</a> gives a shorter construction.</p>

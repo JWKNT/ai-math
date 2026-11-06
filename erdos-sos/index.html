@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="How large an average degree forces a graph to contain every tree of a given size.">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Erdős–Sós Conjecture">
+    <meta property="og:description" content="How large an average degree forces a graph to contain every tree of a given size.">
+    <meta property="og:url" content="https://jehlp.net/ai-math/erdos-sos/">
+    <meta property="og:site_name" content="jehlp.net">
+    <meta name="theme-color" content="#fbfaf7">
+    <link rel="canonical" href="https://jehlp.net/ai-math/erdos-sos/">
+    <title>Erdős–Sós Conjecture · AI Math Results · jehlp.net</title>
+    <link rel="icon" href="https://jehlp.net/site-theme/v2/favicons/ai-math.png" type="image/png">
+    <script src="https://jehlp.net/site-theme/v2/theme.js?v=20261009-reading-folio"></script>
+    <link rel="stylesheet" href="https://jehlp.net/site-theme/v2/base.css?v=20261009-reading-folio">
+    <link rel="stylesheet" href="https://jehlp.net/site-theme/v2/components.css?v=20261105-math3">
+    <link rel="stylesheet" href="../assets/styles.css?v=20261105-plain2">
+    <script src="https://jehlp.net/site-theme/v2/components.js?v=20261105-math3" defer></script>
+  </head>
+  <body data-site-tone="blue">
+    <a class="skip-link" href="#explainer">Skip to the explanation</a>
+    <header class="site-header site-header--identity">
+      <div class="site-brand"><img class="site-mark" src="https://jehlp.net/site-theme/v2/marks/ai-math.png" width="32" height="32" alt=""><span class="site-title">AI Math Results</span></div>
+      <nav aria-label="Site links"><a href="../">All results</a><span class="site-utility-pair"><a class="site-home" href="https://jehlp.net/" aria-label="Home — jehlp.net" title="Home — jehlp.net"><span aria-hidden="true">✳</span></a><button class="theme-toggle" type="button" data-theme-toggle aria-label="Use dark theme" aria-pressed="false">◐</button></span></nav>
+    </header>
+    <main id="explainer" class="ai-math-shell" tabindex="-1">
+      <article class="prose ai-math-article">
+        <h1>Erdős–Sós Conjecture</h1>
+<p>A <dfn>graph</dfn> is a set of dots, called vertices, joined by lines, called edges. The <dfn>degree</dfn> of a vertex is the number of edges at it. The <dfn>average degree</dfn> of a graph is the average of these numbers. A graph with <math><mi>v</mi></math> vertices and <math><mi>e</mi></math> edges has average degree <span class="ai-math-nobreak"><math><mrow><mn>2</mn><mi>e</mi><mi>/</mi><mi>v</mi></mrow></math>,</span> because each edge touches two vertices.</p>
+<p>A <dfn>tree</dfn> is a connected graph with no closed loops. With 4 vertices there are two trees: four vertices in a line, and one center with three edges. With 5 vertices there are three trees. A graph contains a tree if you can find the shape of that tree among its edges. All other edges and vertices do not matter.</p>
+<figure class="ai-math-side">
+<svg viewBox="0 0 380 196" role="img" aria-label="Two graphs. On the left, four vertices with all six edges. On the right, six vertices and ten edges, with a tree on five vertices marked" preserveAspectRatio="xMinYMin meet"><line class="fig-line" x1="127.25" y1="38.75" x2="127.25" y2="129.25"/><line class="fig-line" x1="127.25" y1="38.75" x2="36.75" y2="129.25"/><line class="fig-line" x1="127.25" y1="38.75" x2="36.75" y2="38.75"/><line class="fig-line" x1="127.25" y1="129.25" x2="36.75" y2="129.25"/><line class="fig-line" x1="127.25" y1="129.25" x2="36.75" y2="38.75"/><line class="fig-line" x1="36.75" y1="129.25" x2="36.75" y2="38.75"/><circle class="fig-dot" cx="127.25" cy="38.75" r="4.2"/><circle class="fig-dot" cx="127.25" cy="129.25" r="4.2"/><circle class="fig-dot" cx="36.75" cy="129.25" r="4.2"/><circle class="fig-dot" cx="36.75" cy="38.75" r="4.2"/><line class="fig-accent" x1="284" y1="10" x2="348.09" y2="47"/><line class="fig-guide-strong" x1="348.09" y1="47" x2="348.09" y2="121"/><line class="fig-guide-strong" x1="348.09" y1="121" x2="284" y2="158"/><line class="fig-accent" x1="284" y1="158" x2="219.91" y2="121"/><line class="fig-guide-strong" x1="219.91" y1="121" x2="219.91" y2="47"/><line class="fig-guide-strong" x1="219.91" y1="47" x2="284" y2="10"/><line class="fig-accent" x1="284" y1="10" x2="348.09" y2="121"/><line class="fig-accent" x1="284" y1="10" x2="284" y2="158"/><line class="fig-guide-strong" x1="348.09" y1="47" x2="219.91" y2="121"/><line class="fig-guide-strong" x1="348.09" y1="121" x2="219.91" y2="47"/><circle class="fig-dot-accent" cx="284" cy="10" r="4.2"/><circle class="fig-dot-accent" cx="348.09" cy="47" r="4.2"/><circle class="fig-dot-accent" cx="348.09" cy="121" r="4.2"/><circle class="fig-dot-accent" cx="284" cy="158" r="4.2"/><circle class="fig-dot-accent" cx="219.91" cy="121" r="4.2"/><circle class="fig-dot" cx="219.91" cy="47" r="4.2"/><text class="fig-note" x="82" y="186" text-anchor="middle">Average degree 3</text><text class="fig-note" x="284" y="186" text-anchor="middle">Average degree 3.33</text></svg>
+<figcaption>Left: four vertices and all six edges. No tree with 5 vertices can fit. Right: six vertices and ten edges, so the average degree is above 3. One tree with 5 vertices is marked.</figcaption>
+</figure>
+<p>The question is how many edges force a given tree to appear. Here is a lower limit. Take <math><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></math> vertices and join every pair. Each vertex has degree <span class="ai-math-nobreak"><math><mrow><mi>t</mi><mo>−</mo><mn>2</mn></mrow></math>,</span> so the average degree is <span class="ai-math-nobreak"><math><mrow><mi>t</mi><mo>−</mo><mn>2</mn></mrow></math>.</span> This graph has too few vertices for any tree with <math><mi>t</mi></math> vertices.</p>
+<p>The <dfn>Erdős–Sós conjecture</dfn> says that this limit is exact. A conjecture is a statement that nobody has proved yet. It says that every graph with average degree above <math><mrow><mi>t</mi><mo>−</mo><mn>2</mn></mrow></math> contains every tree with <math><mi>t</mi></math> vertices. For <span class="ai-math-nobreak"><math><mrow><mi>t</mi><mo>=</mo><mn>5</mn></mrow></math>,</span> a graph with average degree above 3 must contain all three trees with 5 vertices.</p>
+<p>The case <math><mrow><mi>t</mi><mo>=</mo><mn>3</mn></mrow></math> is easy to check. An average above 1 means that some vertex has degree at least 2. This vertex and two of its neighbors form the only tree with 3 vertices.</p>
+<p>The difficulty for larger <math><mi>t</mi></math> is the word "average". Growing a tree is easy when every vertex has a high degree. Place one vertex, then attach the others one at a time. If every vertex has degree at least <span class="ai-math-nobreak"><math><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></math>,</span> a free neighbor is always available, because the tree uses fewer than <math><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></math> other vertices.</p>
+<p>An average can hide vertices with a low degree. Take one center joined to 100 other vertices. The center has degree 100, the others have degree 1, and the average is just below 2. This graph holds large stars, but it has no line of 4 vertices. So a high degree at a few vertices does not help with every tree.</p>
+<p>The easy method first removes vertices with a low degree, until every remaining vertex has degree at least <span class="ai-math-nobreak"><math><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></math>.</span> This is only certain to work when the average degree is at least <span class="ai-math-nobreak"><math><mrow><mn>2</mn><mi>t</mi><mo>−</mo><mn>2</mn></mrow></math>,</span> about twice the conjectured amount. The conjecture says that half of that average is enough, for all graphs and all trees.</p>
+<p><a href="https://arxiv.org/abs/2609.17877">David Wood's exposition</a> reports a proof that GPT-6 Astra found for the FrontierMath Erdős project. The proof is a short counting argument. A <a href="https://github.com/tadamcz/erdos548">formal copy</a> passes Lean, a computer program that checks each step of a proof.</p>
+      </article>
+    </main>
+  </body>
+</html>

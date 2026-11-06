@@ -73,5 +73,45 @@
     "slug": "multicolor-triangle-ramsey",
     "title": "Multicolor Triangle Ramsey Numbers",
     "description": "How many points force a one-color triangle when the edges have k colors."
+  },
+  {
+    "slug": "erdos-sos",
+    "title": "Erdős–Sós Conjecture",
+    "description": "How large an average degree forces a graph to contain every tree of a given size."
+  },
+  {
+    "slug": "cycle-double-cover",
+    "title": "Cycle Double Cover",
+    "description": "Why every graph with no bridge has a list of cycles that uses each edge exactly twice."
+  },
+  {
+    "slug": "kothe-conjecture",
+    "title": "Köthe Conjecture",
+    "description": "What the Köthe conjecture said about nil left ideals in rings, and what its counterexample shows."
+  },
+  {
+    "slug": "sendov-conjecture",
+    "title": "Sendov's Conjecture",
+    "description": "How far a zero of a polynomial can be from the nearest critical point."
+  },
+  {
+    "slug": "crouzeix-conjecture",
+    "title": "Crouzeix's Conjecture",
+    "description": "How the numerical range of a matrix limits the size of a polynomial of that matrix."
+  },
+  {
+    "slug": "ehrhart-volume",
+    "title": "Ehrhart Volume Conjecture",
+    "description": "How large a balanced convex shape can be with one lattice point inside."
+  },
+  {
+    "slug": "borsuk-dimension-63",
+    "title": "Borsuk's Conjecture in Dimension 63",
+    "description": "What Borsuk's conjecture says, and what a set of 321 points in dimension 63 shows."
+  },
+  {
+    "slug": "sphere-packing",
+    "title": "High-Dimensional Sphere Packing",
+    "description": "How much of space equal balls can fill when the dimension is large."
   }
 ]

@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import { renderAiMath, typesetMath, mathChars, validateAiMath } from '../lib/pages.mjs';
-import { APSP_EDGES, UG_CONSTRAINTS, UG_VALUES, ZETA_ZEROS, deltoidNeedle, deltoidPoint, figures, k5Color, paleyMatrix } from '../lib/figures.mjs';
+import { APSP_EDGES, EHRHART_TRIANGLE, ES_EDGES, ES_TREE, PETERSEN_COVER, PETERSEN_EDGES, SENDOV_ZEROS, UG_CONSTRAINTS, UG_VALUES, ZETA_ZEROS, deltoidNeedle, deltoidPoint, figures, k5Color, paleyMatrix, rangePoint, sendovCritical } from '../lib/figures.mjs';
 
 const root = new URL('../', import.meta.url);
 const results = JSON.parse(await readFile(new URL('data/results.json', root), 'utf8'));
@@ -381,6 +381,153 @@ test('Ramsey page: the small facts, the table of limits and the product coloring
   // Two five-point colorings combine into 25 points and 4 colors with no one-color triangle.
   const color = (a, b) => (Math.floor(a / 5) === Math.floor(b / 5) ? k5Color(a % 5, b % 5) : k5Color(Math.floor(a / 5), Math.floor(b / 5)) + 2);
   for (let a = 0; a < 25; a++) for (let b = a + 1; b < 25; b++) for (let c = b + 1; c < 25; c++) assert.ok(!(color(a, b) === color(a, c) && color(a, b) === color(b, c)), `${a} ${b} ${c}`);
+});
+
+test('Erdős–Sós page: the figure and the examples hold', () => {
+  assert.equal((2 * ES_EDGES.length / 6).toFixed(2), '3.33');
+  const adjacent = new Set(ES_EDGES.flatMap(([a, b]) => [`${a},${b}`, `${b},${a}`]));
+  const contains = tree => {
+    const place = map => {
+      if (map.length === 5) return tree.every(([a, b]) => adjacent.has(`${map[a]},${map[b]}`));
+      for (let v = 0; v < 6; v++) if (!map.includes(v) && place([...map, v])) return true;
+      return false;
+    };
+    return place([]);
+  };
+  // The line, the star and the third tree with 5 vertices all fit in the graph with average degree above 3.
+  for (const tree of [[[0, 1], [1, 2], [2, 3], [3, 4]], [[0, 1], [0, 2], [0, 3], [0, 4]], [[0, 1], [0, 2], [0, 3], [3, 4]]]) assert.ok(contains(tree));
+  assert.equal(ES_TREE.length, 4);
+  assert.equal(new Set(ES_TREE.flat()).size, 5);
+  for (const [a, b] of ES_TREE) assert.ok(adjacent.has(`${a},${b}`));
+  assert.ok(2 * 100 / 101 < 2, 'one center joined to 100 others');
+  quotes('erdos-sos', 'joined to 100', 'average is just below 2', '\\(2t - 2\\)');
+});
+
+test('Cycle double cover page: the counts, the cover and the absence of a bridge hold', () => {
+  assert.equal(6 * 4, 2 * 12);
+  assert.equal(PETERSEN_EDGES.length, 15);
+  assert.equal(new Set(PETERSEN_EDGES.flat()).size, 10);
+  const key = (a, b) => (a < b ? `${a},${b}` : `${b},${a}`), edges = new Set(PETERSEN_EDGES.map(([a, b]) => key(a, b))), uses = new Map();
+  assert.equal(PETERSEN_COVER.length, 6);
+  for (const cycle of PETERSEN_COVER) {
+    assert.equal(new Set(cycle).size, 5);
+    cycle.forEach((v, i) => { const edge = key(v, cycle[(i + 1) % 5]); assert.ok(edges.has(edge), edge); uses.set(edge, (uses.get(edge) ?? 0) + 1); });
+  }
+  for (const edge of edges) assert.equal(uses.get(edge), 2, edge);
+  for (const removed of edges) {
+    const seen = new Set([0]), queue = [0];
+    while (queue.length) { const v = queue.pop(); for (const [a, b] of PETERSEN_EDGES) { if (key(a, b) === removed) continue; const w = a === v ? b : b === v ? a : null; if (w !== null && !seen.has(w)) { seen.add(w); queue.push(w); } } }
+    assert.equal(seen.size, 10, `${removed} is a bridge`);
+  }
+  quotes('cycle-double-cover', '\\(24 = 2 \\times 12\\)', '\\(6 \\times 5 = 30 = 2 \\times 15\\)');
+});
+
+test('Köthe page: the actions in the table and the power rule hold', () => {
+  const A = ([, y]) => [y, 0], B = ([x]) => [0, x], sum = ([x, y]) => [y, x], BA = pair => B(A(pair)), pair = [3, 7];
+  assert.deepEqual(A(A(pair)), [0, 0]);
+  assert.deepEqual(B(B(pair)), [0, 0]);
+  assert.deepEqual(sum(pair), [A(pair)[0] + B(pair)[0], A(pair)[1] + B(pair)[1]]);
+  assert.deepEqual(sum(sum(pair)), pair);
+  assert.deepEqual(BA(pair), [0, 7]);
+  assert.deepEqual(BA(BA(pair)), BA(pair));
+  // A table with one column, with entries from a nil system: here strictly upper triangular 3 by 3 matrices.
+  const mul = (a, b) => a.map(row => b[0].map((_, j) => row.reduce((s, v, k) => s + v * b[k][j], 0)));
+  const add = (a, b) => a.map((row, i) => row.map((v, j) => v + b[i][j]));
+  const O = [[0, 0, 0], [0, 0, 0], [0, 0, 0]], x = [[0, 1, 2], [0, 0, 3], [0, 0, 0]], y = [[0, 4, 5], [0, 0, 6], [0, 0, 0]];
+  const table = ([a, b, c, d], [e, f, g, h]) => [add(mul(a, e), mul(b, g)), add(mul(a, f), mul(b, h)), add(mul(c, e), mul(d, g)), add(mul(c, f), mul(d, h))];
+  const left = [x, O, y, O], right = [O, x, O, y];
+  const x2 = mul(x, x), y2 = mul(y, y);
+  assert.deepEqual(table(left, left), [x2, O, mul(y, x), O], 'left column x^2, y x');
+  assert.deepEqual(table(table(left, left), left), [mul(x2, x), O, mul(y, x2), O], 'left column x^3, y x^2');
+  assert.deepEqual(table(table(table(left, left), left), left), [O, O, O, O], 'the power reaches zero with x');
+  assert.deepEqual(table(table(table(right, right), right), right), [O, O, O, O], 'the right column works the same way');
+  assert.deepEqual(table(right, right), [O, mul(x, y), O, y2]);
+  quotes('kothe-conjecture', 'b^2 + c &amp; bc \\\\ b &amp; c', '\\(x^k, y x^{k-1}\\)');
+});
+
+test('Sendov page: the sample polynomial and the limiting case hold', () => {
+  const times = ([a, b], [c, d]) => [a * c - b * d, a * d + b * c], minus = ([a, b], [c, d]) => [a - c, b - d];
+  const [p, q, r] = SENDOV_ZEROS, critical = sendovCritical();
+  for (const z of critical) {
+    const [dp, dq, dr] = [minus(z, p), minus(z, q), minus(z, r)];
+    const slope = [times(dq, dr), times(dp, dr), times(dp, dq)].reduce((s, t) => [s[0] + t[0], s[1] + t[1]], [0, 0]);
+    assert.ok(Math.hypot(...slope) < 1e-9, 'a critical point is a zero of the derivative');
+  }
+  for (const z of SENDOV_ZEROS) {
+    assert.ok(Math.hypot(...z) <= 1 + 1e-12, 'each zero lies in the unit disk');
+    assert.ok(Math.min(...critical.map(c => Math.hypot(...minus(z, c)))) <= 1, 'each zero has a critical point within distance 1');
+  }
+  assert.ok(critical.some(c => Math.hypot(...minus(p, c)) < 1), 'the dashed circle holds a critical point');
+  for (let n = 2; n <= 12; n++) for (let k = 0; k < n; k++) assert.ok(Math.abs(Math.hypot(Math.cos(2 * Math.PI * k / n), Math.sin(2 * Math.PI * k / n)) - 1) < 1e-12);
+  quotes('sendov-conjecture', '\\(p\'(x) = 2x\\)', 'about 15,000 lines', 'about 90,000', 'up to 8');
+});
+
+test('Crouzeix page: the worked matrix, the factor 2 and the figure hold', () => {
+  // The vector (cos t, e^{ip} sin t) gives x*Ax = 100 cos t sin t e^{ip} for the matrix with rows (0, 100) and (0, 0).
+  let radius = 0, stretch = 0;
+  for (let i = 0; i <= 1000; i++) { const t = i * Math.PI / 2000; radius = Math.max(radius, 100 * Math.cos(t) * Math.sin(t)); stretch = Math.max(stretch, 100 * Math.sin(t)); }
+  assert.ok(Math.abs(radius - 50) < 1e-9);
+  assert.ok(Math.abs(stretch - 100) < 1e-9);
+  assert.equal(Math.round(stretch) / Math.round(radius), 2);
+  // The figure: x*Ax calculated directly for the matrix with rows (1, 1.5) and (0, -1).
+  for (let i = 0; i <= 24; i++) for (let j = 0; j < 24; j++) {
+    const t = i * Math.PI / 48, p = j * Math.PI / 12, [c, s] = [Math.cos(t), Math.sin(t)], [u, v] = [Math.cos(p), Math.sin(p)];
+    const re = c * (c + 1.5 * u * s) + s * (u * (-u * s) + v * (-v * s)), im = c * 1.5 * v * s + s * (u * (-v * s) - v * (-u * s));
+    const [x, y] = rangePoint(t, p);
+    assert.ok(Math.abs(x - re) < 1e-12 && Math.abs(y - im) < 1e-12, 'the formula in the figure is x*Ax');
+    assert.ok(Math.hypot(x - 1, y) + Math.hypot(x + 1, y) <= 2.5 + 1e-9, 'the point lies in the ellipse with foci 1 and -1');
+  }
+  assert.equal((1 + Math.SQRT2).toFixed(3), '2.414');
+  quotes('crouzeix-conjecture', '\\((100y, 0)\\)', 'radius 50', '11.08', '2.414', '\\(\\|A\\| = 100\\)');
+});
+
+test('Ehrhart page: the triangle reaches the limit, and a lopsided triangle has no limit', () => {
+  const [[a, b], [c, d], [e, f]] = EHRHART_TRIANGLE;
+  assert.equal(Math.abs((c - a) * (f - b) - (e - a) * (d - b)) / 2, 9 / 2);
+  assert.deepEqual([(a + c + e) / 3, (b + d + f) / 3], [0, 0]);
+  const strictlyInside = (points, x, y) => {
+    const sides = points.map(([px, py], i) => { const [qx, qy] = points[(i + 1) % 3]; return (qx - px) * (y - py) - (qy - py) * (x - px); });
+    return sides.every(side => side > 0) || sides.every(side => side < 0);
+  };
+  const lattice = []; for (let x = -3; x <= 3; x++) for (let y = -3; y <= 3; y++) if (strictlyInside(EHRHART_TRIANGLE, x, y)) lattice.push([x, y]);
+  assert.deepEqual(lattice, [[0, 0]]);
+  const limit = n => { let value = 1; for (let k = 1; k <= n; k++) value *= (n + 1) / k; return value; };
+  assert.deepEqual([2, 3, 4, 10].map(n => limit(n).toFixed(2)), ['4.50', '10.67', '26.04', '7147.66']);
+  assert.ok(Math.abs((1 + 1 / 101) ** 101 - 2.7) < .01, 'the growth factor for each new dimension');
+  // The lopsided triangle, scaled by L so that every coordinate is a whole number.
+  const L = 1000, scaled = [[0, -1], [-L * L, L], [L * L, L]], inside = [];
+  for (let x = -L; x <= L; x++) for (const y of [-1, 0, 1]) if (strictlyInside(scaled, x * L, y * L)) inside.push([x, y]);
+  assert.deepEqual(inside, [[0, 0]]);
+  assert.ok(new Q(BigInt(L) * BigInt(L + 1), BigInt(L)).eq(Q.of(L).mul(Q.of(1).add(Q.of(1, L)))), 'its area is L + 1');
+  quotes('ehrhart-volume', '\\(3^2 / 2 = 4.5\\)', '<td>10.67</td>', '<td>26.04</td>', '<td>7,147.66</td>', '<td>1,024</td>', '\\(L + 1\\)');
+});
+
+test('Borsuk page: the count, the disk and the graph parameters hold', () => {
+  assert.equal(64 * 5, 320);
+  assert.equal(Math.ceil(321 / 5), 65);
+  assert.equal((Math.sqrt(3) / 2).toFixed(2), '0.87');
+  // A strongly regular graph with parameters (416, 100, 36, 20) must satisfy k(k - l - 1) = (v - k - 1)m.
+  assert.equal(100 * (100 - 36 - 1), (416 - 100 - 1) * 20);
+  quotes('borsuk-dimension-63', '321 points', 'at most 5 points', '\\(64 \\times 5 = 320\\)', 'at least 65 pieces', '416 vertices', 'to 100 others');
+  assert.ok(figures['borsuk-disk']().includes('>0.87<'));
+});
+
+test('Sphere packing page: the bases, the table and the shares hold', () => {
+  const base = Math.sqrt(Math.E / (2 * Math.PI)), old = 2 ** -0.59905576;
+  assert.equal(base.toFixed(4), '0.6577');
+  assert.equal(Math.log2(1 / base).toFixed(4), '0.6044');
+  assert.equal(old.toFixed(4), '0.6602');
+  assert.equal(Math.round((old / base) ** 1000 / 10) * 10, 40);
+  const factorial = n => { let out = 1; for (let k = 2; k <= n; k++) out *= k; return out; };
+  const densities = [Math.PI / Math.sqrt(12), Math.PI / Math.sqrt(18), Math.PI ** 4 / 384, Math.PI ** 12 / factorial(12)];
+  assert.deepEqual(densities.map(d => (d * 100).toPrecision(3)), ['90.7', '74.0', '25.4', '0.193']);
+  // A ball of radius 1/2 against its unit box, in 2, 3 and 10 dimensions.
+  assert.equal((Math.PI / 4 * 100).toFixed(1), '78.5');
+  assert.equal((Math.PI / 6 * 100).toFixed(1), '52.4');
+  assert.equal((Math.PI ** 5 / factorial(5) / 2 ** 10 * 100).toFixed(2), '0.25');
+  // Touching disks of radius r in rows take up 2 sqrt(3) r^2 of area each.
+  assert.equal((Math.PI / (2 * Math.sqrt(3)) * 100).toFixed(1), '90.7');
+  for (const value of ['<td>90.7%</td>', '<td>74.0%</td>', '<td>25.4%</td>', '<td>0.19%</td>', '78.5%', '52.4%', '0.25%', '0.6602', '0.6577', 'about 40 times']) quotes('sphere-packing', value);
 });
 
 test('figures are named, stay on theme tokens and contain no raw color', async () => {

@@ -51,6 +51,7 @@
 .fig-accent { fill: none; stroke: var(--blue); stroke-width: 1.7; }
 .fig-dash { fill: none; stroke: var(--muted); stroke-width: 1; stroke-dasharray: 4 4; }
 .fig-open { fill: var(--paper); stroke: var(--blue); stroke-width: 1.5; }
+.fig-ball { fill: var(--surface-blue); stroke: var(--blue); stroke-width: 1.2; }
 .fig-dot { fill: var(--ink); }
 .fig-grid { fill: var(--line-strong); }
 .fig-dot-accent { fill: var(--blue); }

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Why every graph with no bridge has a list of cycles that uses each edge exactly twice.">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Cycle Double Cover">
+    <meta property="og:description" content="Why every graph with no bridge has a list of cycles that uses each edge exactly twice.">
+    <meta property="og:url" content="https://jehlp.net/ai-math/cycle-double-cover/">
+    <meta property="og:site_name" content="jehlp.net">
+    <meta name="theme-color" content="#fbfaf7">
+    <link rel="canonical" href="https://jehlp.net/ai-math/cycle-double-cover/">
+    <title>Cycle Double Cover · AI Math Results · jehlp.net</title>
+    <link rel="icon" href="https://jehlp.net/site-theme/v2/favicons/ai-math.png" type="image/png">
+    <script src="https://jehlp.net/site-theme/v2/theme.js?v=20261009-reading-folio"></script>
+    <link rel="stylesheet" href="https://jehlp.net/site-theme/v2/base.css?v=20261009-reading-folio">
+    <link rel="stylesheet" href="https://jehlp.net/site-theme/v2/components.css?v=20261105-math3">
+    <link rel="stylesheet" href="../assets/styles.css?v=20261105-plain2">
+    <script src="https://jehlp.net/site-theme/v2/components.js?v=20261105-math3" defer></script>
+  </head>
+  <body data-site-tone="blue">
+    <a class="skip-link" href="#explainer">Skip to the explanation</a>
+    <header class="site-header site-header--identity">
+      <div class="site-brand"><img class="site-mark" src="https://jehlp.net/site-theme/v2/marks/ai-math.png" width="32" height="32" alt=""><span class="site-title">AI Math Results</span></div>
+      <nav aria-label="Site links"><a href="../">All results</a><span class="site-utility-pair"><a class="site-home" href="https://jehlp.net/" aria-label="Home — jehlp.net" title="Home — jehlp.net"><span aria-hidden="true">✳</span></a><button class="theme-toggle" type="button" data-theme-toggle aria-label="Use dark theme" aria-pressed="false">◐</button></span></nav>
+    </header>
+    <main id="explainer" class="ai-math-shell" tabindex="-1">
+      <article class="prose ai-math-article">
+        <h1>Cycle Double Cover</h1>
+<p>A <dfn>graph</dfn> is a set of dots, called vertices, joined by lines, called edges. A <dfn>cycle</dfn> is a closed loop of edges that visits each of its vertices once. A <dfn>bridge</dfn> is an edge whose removal cuts the graph into more parts. A bridge cannot be in a cycle, because a loop that crosses it has no other way back.</p>
+<p>A <dfn>cycle double cover</dfn> is a list of cycles in which every edge of the graph appears exactly twice. A graph with a bridge cannot have one. The <dfn>cycle double cover conjecture</dfn> says that this is the only obstacle. A conjecture is a statement that nobody has proved yet. It says that every graph with no bridge has a cycle double cover.</p>
+<p>Some graphs make this easy. Draw a graph on paper with no crossing edges. The edges cut the paper into regions, and the area outside the drawing counts as one region. Each edge has one region on each side. So the outlines of the regions use each edge exactly twice. An outline that touches itself at a vertex splits into smaller cycles.</p>
+<p>A cube is one example. You can flatten its 12 edges onto paper with no crossings, and its 6 faces become the regions. Each face has 4 edges, which gives 24 uses in total, and <span class="ai-math-nobreak"><math><mrow><mn>24</mn><mo>=</mo><mn>2</mn><mo>×</mo><mn>12</mn></mrow></math>.</span></p>
+<figure class="ai-math-side">
+<svg viewBox="0 0 260 224" role="img" aria-label="The Petersen graph, an outer pentagon joined to an inner five-pointed star, with one cycle of five edges marked" preserveAspectRatio="xMinYMin meet"><line class="fig-guide-strong" x1="130" y1="70" x2="159.39" y2="160.45"/><line class="fig-guide-strong" x1="232.71" y1="86.63" x2="193.48" y2="207.37"/><line class="fig-guide-strong" x1="193.48" y1="207.37" x2="66.52" y2="207.37"/><line class="fig-guide-strong" x1="193.48" y1="207.37" x2="159.39" y2="160.45"/><line class="fig-guide-strong" x1="159.39" y1="160.45" x2="82.45" y2="104.55"/><line class="fig-guide-strong" x1="66.52" y1="207.37" x2="27.29" y2="86.63"/><line class="fig-guide-strong" x1="66.52" y1="207.37" x2="100.61" y2="160.45"/><line class="fig-guide-strong" x1="27.29" y1="86.63" x2="130" y2="12"/><line class="fig-guide-strong" x1="27.29" y1="86.63" x2="82.45" y2="104.55"/><line class="fig-guide-strong" x1="82.45" y1="104.55" x2="177.55" y2="104.55"/><line class="fig-accent" x1="130" y1="12" x2="232.71" y2="86.63"/><line class="fig-accent" x1="130" y1="12" x2="130" y2="70"/><line class="fig-accent" x1="232.71" y1="86.63" x2="177.55" y2="104.55"/><line class="fig-accent" x1="177.55" y1="104.55" x2="100.61" y2="160.45"/><line class="fig-accent" x1="100.61" y1="160.45" x2="130" y2="70"/><circle class="fig-dot-accent" cx="130" cy="12" r="4.2"/><circle class="fig-dot-accent" cx="232.71" cy="86.63" r="4.2"/><circle class="fig-dot" cx="193.48" cy="207.37" r="4.2"/><circle class="fig-dot" cx="66.52" cy="207.37" r="4.2"/><circle class="fig-dot" cx="27.29" cy="86.63" r="4.2"/><circle class="fig-dot-accent" cx="130" cy="70" r="4.2"/><circle class="fig-dot-accent" cx="177.55" cy="104.55" r="4.2"/><circle class="fig-dot" cx="159.39" cy="160.45" r="4.2"/><circle class="fig-dot-accent" cx="100.61" cy="160.45" r="4.2"/><circle class="fig-dot" cx="82.45" cy="104.55" r="4.2"/></svg>
+<figcaption>The Petersen graph has 10 vertices and 15 edges. The marked cycle is one of six cycles of 5 edges that together use each edge exactly twice.</figcaption>
+</figure>
+<p>The hard graphs are those that you cannot draw on paper without crossings. They have no regions to use. The <dfn>Petersen graph</dfn> in the figure is the best-known example. It still has a double cover: six cycles of 5 edges each, and <span class="ai-math-nobreak"><math><mrow><mn>6</mn><mo>×</mo><mn>5</mn><mo>=</mo><mn>30</mn><mo>=</mo><mn>2</mn><mo>×</mo><mn>15</mn></mrow></math>.</span></p>
+<p>There is another way to say the same thing, with colors. Give each edge exactly two colors, so that each color appears an even number of times at each vertex. Now look at the edges of one color. If you walk along them, you can always leave a vertex that you enter, so these edges split into closed loops. Each edge has two colors, so it lies in two loops.</p>
+<p><a href="https://cdn.openai.com/pdf/04d1d1e4-bc75-476a-97cf-49055cd98d31/cdc_proof.pdf">OpenAI reports a proof</a>, which it credits to GPT-5.6 Sol Ultra. The proof finds such a coloring with linear algebra, starting from an older theorem about flows on graphs. Graph theorists <a href="https://arxiv.org/abs/2607.15399">Jim Geelen</a> and <a href="https://arxiv.org/abs/2607.16356">Sang-il Oum</a> have each written out the argument. Oum writes that it can be taught to advanced undergraduate students.</p>
+      </article>
+    </main>
+  </body>
+</html>

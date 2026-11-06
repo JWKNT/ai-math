@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="How much of space equal balls can fill when the dimension is large.">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="High-Dimensional Sphere Packing">
+    <meta property="og:description" content="How much of space equal balls can fill when the dimension is large.">
+    <meta property="og:url" content="https://jehlp.net/ai-math/sphere-packing/">
+    <meta property="og:site_name" content="jehlp.net">
+    <meta name="theme-color" content="#fbfaf7">
+    <link rel="canonical" href="https://jehlp.net/ai-math/sphere-packing/">
+    <title>High-Dimensional Sphere Packing · AI Math Results · jehlp.net</title>
+    <link rel="icon" href="https://jehlp.net/site-theme/v2/favicons/ai-math.png" type="image/png">
+    <script src="https://jehlp.net/site-theme/v2/theme.js?v=20261009-reading-folio"></script>
+    <link rel="stylesheet" href="https://jehlp.net/site-theme/v2/base.css?v=20261009-reading-folio">
+    <link rel="stylesheet" href="https://jehlp.net/site-theme/v2/components.css?v=20261105-math3">
+    <link rel="stylesheet" href="../assets/styles.css?v=20261105-plain2">
+    <script src="https://jehlp.net/site-theme/v2/components.js?v=20261105-math3" defer></script>
+  </head>
+  <body data-site-tone="blue">
+    <a class="skip-link" href="#explainer">Skip to the explanation</a>
+    <header class="site-header site-header--identity">
+      <div class="site-brand"><img class="site-mark" src="https://jehlp.net/site-theme/v2/marks/ai-math.png" width="32" height="32" alt=""><span class="site-title">AI Math Results</span></div>
+      <nav aria-label="Site links"><a href="../">All results</a><span class="site-utility-pair"><a class="site-home" href="https://jehlp.net/" aria-label="Home — jehlp.net" title="Home — jehlp.net"><span aria-hidden="true">✳</span></a><button class="theme-toggle" type="button" data-theme-toggle aria-label="Use dark theme" aria-pressed="false">◐</button></span></nav>
+    </header>
+    <main id="explainer" class="ai-math-shell" tabindex="-1">
+      <article class="prose ai-math-article">
+        <h1>High-Dimensional Sphere Packing</h1>
+<p>Stack equal balls in space so that they do not overlap. The <dfn>density</dfn> of the stack is the share of space that the balls fill. The question is how large this share can be. In <math><mi>d</mi></math> dimensions, a point is a list of <math><mi>d</mi></math> numbers. A ball is the set of points within a fixed distance of a center. So a ball in 1 dimension is a line segment, and a ball in 2 dimensions is a disk.</p>
+<figure class="ai-math-side">
+<svg viewBox="0 0 340 198" role="img" aria-label="Equal disks in the plane, each touching six others" preserveAspectRatio="xMinYMin meet"><circle class="fig-ball" cx="28" cy="28" r="27"/><circle class="fig-ball" cx="82" cy="28" r="27"/><circle class="fig-ball" cx="136" cy="28" r="27"/><circle class="fig-ball" cx="190" cy="28" r="27"/><circle class="fig-ball" cx="244" cy="28" r="27"/><circle class="fig-ball" cx="298" cy="28" r="27"/><circle class="fig-ball" cx="55" cy="74.77" r="27"/><circle class="fig-ball" cx="109" cy="74.77" r="27"/><circle class="fig-ball" cx="163" cy="74.77" r="27"/><circle class="fig-ball" cx="217" cy="74.77" r="27"/><circle class="fig-ball" cx="271" cy="74.77" r="27"/><circle class="fig-ball" cx="28" cy="121.53" r="27"/><circle class="fig-ball" cx="82" cy="121.53" r="27"/><circle class="fig-ball" cx="136" cy="121.53" r="27"/><circle class="fig-ball" cx="190" cy="121.53" r="27"/><circle class="fig-ball" cx="244" cy="121.53" r="27"/><circle class="fig-ball" cx="298" cy="121.53" r="27"/><circle class="fig-ball" cx="55" cy="168.3" r="27"/><circle class="fig-ball" cx="109" cy="168.3" r="27"/><circle class="fig-ball" cx="163" cy="168.3" r="27"/><circle class="fig-ball" cx="217" cy="168.3" r="27"/><circle class="fig-ball" cx="271" cy="168.3" r="27"/></svg>
+<figcaption>In 2 dimensions, this arrangement is the best. It fills about 90.7% of the plane.</figcaption>
+</figure>
+<p>Exact answers are known in dimensions 1, 2, 3, 8 and 24. The last two come from very symmetric arrangements of points:</p>
+<div class="table-scroll" data-scroll-region aria-label="The largest possible density in five dimensions">
+<table class="ui-table">
+<thead><tr><th scope="col">Dimension <math><mi>d</mi></math></th><th scope="col">Largest density</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>100%</td></tr>
+<tr><td>2</td><td>90.7%</td></tr>
+<tr><td>3</td><td>74.0%</td></tr>
+<tr><td>8</td><td>25.4%</td></tr>
+<tr><td>24</td><td>0.19%</td></tr>
+</tbody>
+</table>
+</div>
+<p>The density falls fast because a ball fills less and less of the box around it. A disk fills 78.5% of its square, and a ball fills 52.4% of its cube. In 10 dimensions, a ball fills only 0.25% of its box. So for large <span class="ai-math-nobreak"><math><mi>d</mi></math>,</span> it helps to write the density as a base number raised to the power <span class="ai-math-nobreak"><math><mi>d</mi></math>.</span></p>
+<p>A lower limit is easy. Keep adding balls until no more fit. Then every point of space is within twice the radius of some center, because otherwise another ball would fit. So balls with twice the radius cover all of space. Doubling the radius multiplies the volume of a ball by <span class="ai-math-nobreak"><math><msup><mn>2</mn><mi>d</mi></msup></math>,</span> so the original balls fill at least <math><msup><mn>0.5</mn><mi>d</mi></msup></math> of space. The best packings known are not much better than this.</p>
+<p>An upper limit is harder, because it must hold for every possible arrangement. In 1978, Grigory Kabatiansky and Vladimir Levenshtein proved that no packing fills more than about <math><msup><mn>0.6602</mn><mi>d</mi></msup></math> of space when <math><mi>d</mi></math> is large. Later work only improved smaller factors, so this base stayed the same.</p>
+<p><a href="https://openai.com/index/ten-advances-in-mathematics/">OpenAI reports</a> a lower base, from an internal model. The new upper limit for large <span class="ai-math-nobreak"><math><mi>d</mi></math>,</span> ignoring smaller factors, is:</p>
+<div class="ui-equation" data-scroll-region data-scroll-noun="of the formula" aria-label="Formula"><math display="block" class="tml-display" style="display:block math;"><mrow><msup><mrow><mo fence="true" form="prefix" stretchy="true">(</mo><msqrt><mfrac><mi>e</mi><mrow><mn>2</mn><mi>π</mi></mrow></mfrac></msqrt><mo fence="true" form="postfix" stretchy="true">)</mo></mrow><mi>d</mi></msup><mo>≈</mo><msup><mn>0.6577</mn><mi>d</mi></msup></mrow></math></div>
+<p>Here <math><mi>e</mi></math> is about 2.718 and <math><mi>π</mi></math> is about 3.14159. The change looks small, but it multiplies with each dimension. In 1,000 dimensions, ignoring smaller factors, the new limit is about 40 times lower than the old one. So the true base lies somewhere between 0.5 and 0.6577.</p>
+<p>The result also shows where a whole method stops. The Cohn–Elkies method gets an upper limit from one carefully chosen function. It gave the exact answers in 8 and 24 dimensions. OpenAI's theorem shows that in high dimensions, this method reaches exactly the new base and no lower. So any lower base will need a different method.</p>
+      </article>
+    </main>
+  </body>
+</html>
