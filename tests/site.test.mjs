@@ -143,12 +143,14 @@ class Q {
 const isqrt = n => { let x = n, y = (x + 1n) / 2n; while (y < x) { x = y; y = (x + n / x) / 2n; } return x; };
 
 test('Diophantine page: the sizes and the worked tests', () => {
-  assert.equal(Math.round(292890231905 / 1e9), 293);
-  assert.equal(2 ** 2 ** 2 ** 2, 65536);
-  assert.equal(String(2n ** 65536n).length, 19729);
+  // The published equation has variable 0 and 12,503 more. Its largest coefficient is below 2^80.
+  assert.equal(12503 + 1, 12504);
+  const largest = 685783949153203534233601n;
+  assert.equal(String(largest).length, 24);
+  assert.ok(largest < 2n ** 80n);
   assert.ok(Q.of(3, 4).mul(Q.of(4, 3)).eq(Q.of(1)));
   assert.ok(Q.of(3, 2).pow(2).eq(Q.of(9, 4)));
-  quotes('z-diophantine-in-q', '293 billion', '65,536', '19,729', '9/4');
+  quotes('z-diophantine-in-q', '12,504 letters', '12,503 extra letters', 'highest power is 4', '135,721 terms', '24 digits', '11,939', '9/4');
 });
 
 test('ETH page: the settings, the years and the threshold', () => {
