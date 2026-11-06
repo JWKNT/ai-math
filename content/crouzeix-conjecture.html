@@ -9,7 +9,7 @@
 </figure>
 <p>The <dfn>numerical range</dfn> does better, and it uses complex numbers. A <dfn>complex number</dfn> has the form \(a + bi\), where \(i^2 = -1\). It is a point on a flat map, with \(a\) across and \(b\) up.</p>
 <p>Take a vector \(x\) of length 1, apply \(A\), and measure how much of the result points along \(x\). This gives one complex number, written \(x^*Ax\). The numerical range \(W(A)\) is the set of these points for all such \(x\). It is a region with no dents, and it holds all the eigenvalues. For the matrix above, it is a disk with radius 50, so it shows the size that the eigenvalues miss.</p>
-<p><dfn>Crouzeix's conjecture</dfn> says that this region gives the size of \(p(A)\), up to a factor of 2. A conjecture is a statement that nobody has proved yet. It says that this holds for every matrix and every polynomial:</p>
+<p><dfn>Crouzeix's conjecture</dfn> says that this region gives the size of \(p(A)\), up to a factor of 2. It says that this holds for every matrix and every polynomial:</p>
 \[ \|p(A)\| \le 2 \max_{z \in W(A)} |p(z)| \]
 <p>Here \(|p(z)|\) is the distance from 0 to \(p(z)\) on the map, and \(\max\) means the largest value over the region. So the right side uses \(p\) as an ordinary formula. Take its largest size over the region, then double it. So a question about a large table becomes a question about one formula on one region.</p>
 <p>The factor 2 cannot go lower. Use the matrix above with \(p(z) = z\). Then \(\|p(A)\| = 100\), and the largest \(|z|\) on the disk is 50. Earlier proofs reached a factor of 11.08, and then \(1 + \sqrt{2}\), which is about 2.414.</p>
