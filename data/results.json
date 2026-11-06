@@ -2,12 +2,12 @@
   {
     "slug": "z-diophantine-in-q",
     "title": "ℤ is Diophantine in ℚ",
-    "description": "What it means for the integers to be Diophantine in the rational numbers."
+    "description": "What it means for the whole numbers to be Diophantine in the fractions."
   },
   {
     "slug": "exponential-time-hypothesis",
     "title": "Exponential Time Hypothesis",
-    "description": "What the Exponential Time Hypothesis says, and what an algorithm that refutes it means."
+    "description": "What the Exponential Time Hypothesis says, and what a method that refutes it means."
   },
   {
     "slug": "quasi-riemann-hypothesis",
@@ -17,7 +17,7 @@
   {
     "slug": "kakeya-conjecture",
     "title": "Kakeya Conjecture in All Dimensions",
-    "description": "What the Kakeya conjecture says about sets with a segment in every direction."
+    "description": "What the Kakeya conjecture says about sets with a needle in every direction."
   },
   {
     "slug": "jacobian-conjecture",
@@ -32,12 +32,12 @@
   {
     "slug": "hilberts-tenth-problem",
     "title": "Hilbert's Tenth Problem",
-    "description": "Whether an algorithm can decide if a polynomial equation has a solution in integers or in fractions."
+    "description": "Whether a method can decide if a polynomial equation has a solution in whole numbers or in fractions."
   },
   {
     "slug": "unique-games",
     "title": "Unique Games Conjecture",
-    "description": "What the Unique Games Conjecture says about systems of simple equations that are hard to satisfy even approximately."
+    "description": "What the Unique Games Conjecture says about lists of simple rules that are hard to satisfy, even in part."
   },
   {
     "slug": "navier-stokes",
@@ -57,17 +57,17 @@
   {
     "slug": "subquadratic-3sum",
     "title": "Subquadratic 3SUM",
-    "description": "What the 3SUM hypothesis says, and the algorithm that refutes it."
+    "description": "What the 3SUM hypothesis says, and the method that refutes it."
   },
   {
     "slug": "all-pairs-shortest-paths",
     "title": "All-Pairs Shortest Paths",
-    "description": "Why all-pairs shortest paths was stuck at cubic time, and the algorithm that beats it."
+    "description": "Why all-pairs shortest paths was stuck at about n³ steps, and the method that beats it."
   },
   {
     "slug": "quantum-parallel-repetition",
     "title": "Quantum Parallel Repetition",
-    "description": "What happens to a two-player game with entanglement when the players must win many copies at once."
+    "description": "What happens to a two-player game with entanglement when the players must win many rounds at once."
   },
   {
     "slug": "multicolor-triangle-ramsey",

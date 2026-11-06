@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="What the 3SUM hypothesis says, and the algorithm that refutes it.">
+    <meta name="description" content="What the 3SUM hypothesis says, and the method that refutes it.">
     <meta property="og:type" content="article">
     <meta property="og:title" content="Subquadratic 3SUM">
-    <meta property="og:description" content="What the 3SUM hypothesis says, and the algorithm that refutes it.">
+    <meta property="og:description" content="What the 3SUM hypothesis says, and the method that refutes it.">
     <meta property="og:url" content="https://jehlp.net/ai-math/subquadratic-3sum/">
     <meta property="og:site_name" content="jehlp.net">
     <meta name="theme-color" content="#fbfaf7">
@@ -54,11 +54,11 @@
 </table>
 </div>
 </figure>
-<p>The <dfn>3SUM hypothesis</dfn> says that <math><msup><mi>n</mi><mn>2</mn></msup></math> is essentially the limit. It says that no method takes <math><msup><mi>n</mi><mn>1.99</mn></msup></math> steps, or <math><msup><mi>n</mi><mrow><mn>2</mn><mo>−</mo><mi>ε</mi></mrow></msup></math> for any fixed small number <span class="ai-math-nobreak"><math><mi>ε</mi></math>.</span> A similar hypothesis says the same about <math><msup><mi>n</mi><mn>3</mn></msup></math> for <a href="../all-pairs-shortest-paths/">all-pairs shortest paths</a>.</p>
+<p>The <dfn>3SUM hypothesis</dfn> says that <math><msup><mi>n</mi><mn>2</mn></msup></math> is essentially the limit. A hypothesis is a statement that nobody has proved yet. This one says that no method takes <math><msup><mi>n</mi><mn>1.99</mn></msup></math> steps, or <math><msup><mi>n</mi><mrow><mn>2</mn><mo>−</mo><mi>ε</mi></mrow></msup></math> for any fixed small number <span class="ai-math-nobreak"><math><mi>ε</mi></math>,</span> the Greek letter epsilon. A power does not have to be a whole number, and <math><msup><mi>n</mi><mn>1.99</mn></msup></math> is a little less than <span class="ai-math-nobreak"><math><msup><mi>n</mi><mn>2</mn></msup></math>.</span> A similar hypothesis says the same about <math><msup><mi>n</mi><mn>3</mn></msup></math> for <a href="../all-pairs-shortest-paths/">all-pairs shortest paths</a>, the problem of finding the cheapest route between every pair of towns.</p>
 <p>Researchers used these hypotheses as working assumptions. They showed that if some other problem had a fast method, then 3SUM would have one too. Many problems in geometry were explained in this way, such as checking if three out of many points lie on one straight line.</p>
 <p><a href="https://arxiv.org/abs/2610.06783">Josh Alman and Virginia Vassilevska Williams report</a> that both hypotheses are false. Their method takes about <math><msup><mi>n</mi><mn>1.9992</mn></msup></math> steps, for whole numbers no larger than a fixed power of <span class="ai-math-nobreak"><math><mi>n</mi></math>.</span> Claude discovered the method, and the authors then simplified and extended it.</p>
 <p>The saving is very small. With a billion numbers, <math><msup><mi>n</mi><mn>1.9992</mn></msup></math> is only about 1.6% less than <span class="ai-math-nobreak"><math><msup><mi>n</mi><mn>2</mn></msup></math>.</span> A count like this also leaves out a fixed multiplier, and the authors say that this multiplier is enormous. So the method is potentially impractical. What changes is the theory: <math><msup><mi>n</mi><mn>2</mn></msup></math> is not the limit for 3SUM.</p>
-<p>The method uses tables of numbers, called matrices. An operation called the matrix product combines two tables into a third. The new method computes selected entries of that third table faster than computing them one by one. Researchers had already built conversions from 3SUM to tasks of this kind, to show that those tasks are hard. The same conversions now run as a fast method for 3SUM.</p>
+<p>The method uses matrices. A <dfn>matrix</dfn> is a table of numbers. An operation called the matrix product combines two matrices into a third. The new method computes selected entries of that third matrix faster than computing them one by one. Researchers had already built conversions from 3SUM to tasks of this kind, to show that those tasks are hard. The same conversions now run as a fast method for 3SUM.</p>
       </article>
     </main>
   </body>

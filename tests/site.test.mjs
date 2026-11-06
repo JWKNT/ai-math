@@ -91,6 +91,43 @@ test('original prose stays within the writing policy limits', () => {
   assert.deepEqual(problems, []);
 });
 
+// Every page assumes the same baseline: whole and negative numbers, fractions, decimals, percentages,
+// whole-number powers, square roots, letters for numbers, simple equations, points on a grid and simple
+// shapes. A reader can land on any page from a link, so a page defines each other term that it uses.
+const withoutLinks = html => html.replace(/href="[^"]*"/g, '');
+const STANDARD_DEFINITIONS = [
+  [/\bconjectur/i, 'A conjecture is a statement that nobody has proved yet.'],
+  [/\bhypothes[ie]s\b/i, 'A hypothesis is a statement that nobody has proved yet.'],
+  [/\bpolynomial/i, 'A <dfn>polynomial</dfn> is a formula that only adds and multiplies numbers and letters'],
+  [/\bmatri(?:x|ces)\b/i, 'A <dfn>matrix</dfn> is a table of numbers'],
+  [/\bcomplex number/i, 'A <dfn>complex number</dfn> has the form \\(a + bi\\), where \\(i^2 = -1\\). It is a point on a flat map, with \\(a\\) across and \\(b\\) up.'],
+  [/\bvertices\b/i, 'A <dfn>graph</dfn> is a set of dots, called vertices, joined by lines, called edges.'],
+  [/\bfunctions?\b/i, 'A <dfn>function</dfn> is a rule that gives an output for each input.'],
+  [/\bLean\b/, 'a computer program that checks each step of a proof'],
+  [/\bdimensions\b/i, /\bpoint(?: in \S+ dimensions)? is a list of\b/],
+];
+// One word for each idea: whole number, fraction, method, paper, chance, fixed number and limit.
+const OFF_STANDARD = /\b(?:integers?|rational|coefficients?|algorithms?|manuscripts?|preprints?|probability|constants?|bounds?)\b/i;
+
+test('every page stands alone on one baseline, with one set of definitions and words', () => {
+  const problems = [];
+  for (const { slug, description } of results) {
+    const body = withoutLinks(bodies[slug]);
+    for (const [use, definition] of STANDARD_DEFINITIONS) {
+      const defined = typeof definition === 'string' ? body.includes(definition) : definition.test(body);
+      if (use.test(body) && !defined) problems.push(`${slug} uses ${use} without the standard definition`);
+    }
+    // The figure labels and the page description count too: readers meet them in screen readers and search results.
+    for (const text of [withoutLinks(articleOf(slug)).replace(/<math[\s\S]*?<\/math>/g, ' '), description]) {
+      const word = text.match(OFF_STANDARD);
+      if (word) problems.push(`${slug} says "${word[0]}"`);
+    }
+    const crowded = body.match(/[a-z)]\.(?:<a\b|<dfn>|[A-Z])/);
+    if (crowded) problems.push(`${slug} has no space after a sentence: ${crowded[0]}`);
+  }
+  assert.deepEqual(problems, []);
+});
+
 // Exact checks for the calculations that the pages quote. Each quoted number must appear on its page.
 const quotes = (slug, ...values) => { for (const value of values) assert.ok(bodies[slug].includes(value), `${slug} quotes ${value}`); };
 const gcd = (a, b) => { a = a < 0n ? -a : a; b = b < 0n ? -b : b; while (b) [a, b] = [b, a % b]; return a; };

@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="What the Exponential Time Hypothesis says, and what an algorithm that refutes it means.">
+    <meta name="description" content="What the Exponential Time Hypothesis says, and what a method that refutes it means.">
     <meta property="og:type" content="article">
     <meta property="og:title" content="Exponential Time Hypothesis">
-    <meta property="og:description" content="What the Exponential Time Hypothesis says, and what an algorithm that refutes it means.">
+    <meta property="og:description" content="What the Exponential Time Hypothesis says, and what a method that refutes it means.">
     <meta property="og:url" content="https://jehlp.net/ai-math/exponential-time-hypothesis/">
     <meta property="og:site_name" content="jehlp.net">
     <meta name="theme-color" content="#fbfaf7">
@@ -47,9 +47,9 @@
 </div>
 </figure>
 <p>The <dfn>Exponential Time Hypothesis</dfn> says that this cannot be fixed. It says that some number above 1 exists, such as 1.1 or 1.01, with this property. Every possible method must multiply the work by at least that number for each new switch, on the hardest puzzles.</p>
-<p>Nobody had proved this. Researchers used it as a working assumption, to show that other problems are hard. The argument goes like this: if that problem had a fast method, then 3-SAT would have a method faster than the hypothesis allows.</p>
+<p>A hypothesis is a statement that nobody has proved yet. Researchers used this one as a working assumption, to show that other problems are hard. The argument goes like this: if that problem had a fast method, then 3-SAT would have a method faster than the hypothesis allows.</p>
 <p><a href="https://github.com/openai/math/blob/main/preprints/The-Exponential-Time-Hypothesis-is-False-October-25-2026/paper.pdf">OpenAI</a> and <a href="https://github.com/anthropics/formal-math/blob/main/eth/paper.pdf">Anthropic</a> each report that the hypothesis is false. Each gives a method whose multiplier is not fixed. As puzzles grow, the multiplier for each new switch keeps falling toward 1. So no number above 1 can be a limit. Both methods also count how many settings work, not only whether one exists.</p>
-<p>This does not help anyone solve real puzzles. The gain appears only for enormous inputs. Anthropic calculates that its bound beats trying every setting only above <math><msup><mn>10</mn><mrow><mn>10</mn><mspace width="0.1667em"></mspace><mn>000</mn></mrow></msup></math> switches, when there are 5 rules per switch. That is a 1 followed by 10,000 zeros. The observable universe has only about <math><msup><mn>10</mn><mn>80</mn></msup></math> atoms.</p>
+<p>This does not help anyone solve real puzzles. The gain appears only for enormous inputs. Anthropic calculates that its method beats trying every setting only above <math><msup><mn>10</mn><mrow><mn>10</mn><mspace width="0.1667em"></mspace><mn>000</mn></mrow></msup></math> switches, when there are 5 rules per switch. That is a 1 followed by 10,000 zeros. The observable universe has only about <math><msup><mn>10</mn><mn>80</mn></msup></math> atoms.</p>
 <p>It also does not settle the famous question of P versus NP. For <math><mi>n</mi></math> switches, that question asks for a method with work like <math><msup><mi>n</mi><mn>2</mn></msup></math> or <span class="ai-math-nobreak"><math><msup><mi>n</mi><mn>3</mn></msup></math>,</span> or any other fixed power of <span class="ai-math-nobreak"><math><mi>n</mi></math>.</span> The new methods are still far slower than that.</p>
       </article>
     </main>

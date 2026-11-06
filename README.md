@@ -10,8 +10,9 @@ Append an entry to `data/results.json` and write its body in `content/<slug>.htm
 Follow the `jehlp-math-explainer` skill in site-theme.
 
 A body is plain paragraphs and one `ai-math-side` figure or table for the margin, in 400 to 800 words.
-It assumes school arithmetic and defines each term at first use. It has no headings, proof, status,
-history or source list. Link a source on the words that state the result.
+It uses the baseline in the skill and defines every other term at first use, in the standard words
+that `tests/site.test.mjs` checks. It has no headings, proof, status, history or source list.
+Link a source on the words that state the result.
 
 Write math between `\(` and `\)` or between `\[` and `\]`. The build typesets it to native MathML with
 the pinned `temml` development dependency, so the pages load no typesetter. `{{fig:name}}` inserts a
