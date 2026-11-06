@@ -1,0 +1,25 @@
+<p>The school method multiplies each digit of one number by each digit of the other. With \(n\) digits in each number, that is \(n \times n = n^2\) small products. For two numbers with a billion digits, it is \(10^{18}\) small products.</p>
+<p>Faster methods cut the numbers into short pieces and mix the pieces in rounds. This mixing, a <dfn>Fourier transform</dfn>, turns one long multiplication into many short ones. Most of its work is one action, called a <dfn>butterfly</dfn>. A butterfly takes two numbers \(a\) and \(b\), and it gives \(a + b\) and \(a - b\). A list of 8 pieces takes 3 rounds of 4 butterflies, so 12 in all.</p>
+<figure class="ai-math-side">
+{{fig:butterfly}}
+<figcaption>Here the pieces are the digits of 31,415,926. The marked butterfly turns 3 and 5 into 8 and \(-2\).</figcaption>
+</figure>
+<p>Each time the list doubles, it needs one more round. So \(n\) digits need about \(\log n\) rounds. Here \(\log n\), the <dfn>logarithm</dfn> of \(n\), counts how many times you must double 1 to reach \(n\). So \(\log 8 = 3\) and \(\log 1{,}024 = 10\), and the logarithm of a billion is about 30.</p>
+<p>Each round passes over all \(n\) digits, so the method takes about \(n \log n\) steps. With a billion digits, that is about 30 billion steps. A count like this leaves out a fixed multiplier.</p>
+<p>A step here is one move of a <dfn>Turing machine</dfn>, a simple model of a computer. It has a fixed number of long tapes. Each move reads and writes one symbol on each tape, and it shifts each tape by at most one place. So moving data also costs steps.</p>
+<p>In 1971, Arnold Schönhage and Volker Strassen proposed that \(n \log n\) is the limit for such a machine. <a href="https://www.texmacs.org/joris/nlogn/nlogn.pdf">David Harvey and Joris van der Hoeven</a> reached this count in 2019, and Harvey <a href="https://web.maths.unsw.edu.au/~davidharvey/research/subnlogn.pdf">wrote</a> that the limit had seemed like a law of physics.</p>
+<p><a href="https://github.com/openai/math/blob/main/preprints/Integer-multiplication-below-n-log-n-September-23-2026/paper.pdf">A paper from OpenAI</a>, produced by an unreleased AI model, reports a method below that limit. It takes about \(n (\log n)^{1 - \kappa}\) steps, where \(\kappa\), the Greek letter kappa, is a fixed number above 0. It always gives the exact product, on one fixed Turing machine, for every \(n\). Harvey calls the claim plausible, but he says that he has not checked most of the details.</p>
+<p>A power does not have to be a whole number, and the usual rule still holds: \(x^{1 - \kappa} = x \div x^{\kappa}\). So the new count is \(n \log n\) divided by \((\log n)^{\kappa}\). For example, if \(\kappa\) were \(1/4\) and \(\log n\) were 16, the divisor would be \(16^{1/4} = 2\). As \(n\) grows, the divisor grows without limit, so it eventually beats any fixed multiplier. That is what below \(n \log n\) means.</p>
+<p>The real \(\kappa\) is far smaller. <a href="https://github.com/platypii/integer-mult-bounds-lean">A public project</a> reports a complete proof in Lean, a computer program that checks each step of a proof. It covers the project's own version of the method. <a href="https://github.com/CrocSwap/integer-mult-bounds">Community work</a> reaches a larger \(\kappa\), but it relies on 5 assumptions. In each case, the divisor reaches 2 only when \(\log n = 2^{1/\kappa}\).</p>
+<div class="table-scroll" data-scroll-region aria-label="How large log n must be for a divisor of 2">
+<table class="ui-table">
+<thead><tr><th scope="col">Source</th><th scope="col">\(\kappa\)</th><th scope="col">\(\log n\) for a divisor of 2</th></tr></thead>
+<tbody>
+<tr><td>OpenAI paper</td><td>\(2^{-182}\)</td><td>\(2^{2^{182}}\)</td></tr>
+<tr><td>Lean proof</td><td>about 0.00006</td><td>about \(2^{16{,}665}\)</td></tr>
+<tr><td>Community work</td><td>about 0.0031</td><td>about \(2^{320}\)</td></tr>
+</tbody>
+</table>
+</div>
+<p>The observable universe has only about \(2^{266}\) atoms, so no computer could hold numbers with so many digits. The paper also says that its fixed multiplier is extremely large. So this is not a faster way to multiply on a real computer. What changes is the theory: \(n \log n\) is not the limit.</p>
+<p>The new idea is to work on many lists at once. Done one by one, 14,336 lists of \(2^{73}\) pieces need 73 rounds each, or 1,046,528 rounds in all. <a href="https://github.com/platypii/integer-mult-bounds-lean/blob/1cf624d11fc3f92e86f739b56b395b9f1bdc28b8/IntegerMultBounds/MathlibTM2/Cost/Branching.lean">One network</a> adds lists to each other between rounds, and it needs only 1,041,408, or about 72.64 for each list. A block of rounds is a smaller copy of the same task, so the network can run inside itself. With enough levels, \(r\) rounds shrink to about \(r^{0.9989}\), and \(r\) is about \(\log n\). Other parts of the method save less, such as moving data along the tapes, so the final \(\kappa\) is smaller.</p>

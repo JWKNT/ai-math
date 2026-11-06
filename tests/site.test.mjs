@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import { renderAiMath, typesetMath, mathChars, validateAiMath } from '../lib/pages.mjs';
-import { APSP_EDGES, EHRHART_TRIANGLE, ES_EDGES, ES_TREE, PETERSEN_COVER, PETERSEN_EDGES, SENDOV_ZEROS, UG_CONSTRAINTS, UG_VALUES, ZETA_ZEROS, deltoidNeedle, deltoidPoint, figures, k5Color, paleyMatrix, rangePoint, sendovCritical } from '../lib/figures.mjs';
+import { APSP_EDGES, BUTTERFLY_DIGITS, EHRHART_TRIANGLE, ES_EDGES, ES_TREE, PETERSEN_COVER, PETERSEN_EDGES, SENDOV_ZEROS, UG_CONSTRAINTS, UG_VALUES, ZETA_ZEROS, butterflyRounds, deltoidNeedle, deltoidPoint, figures, k5Color, paleyMatrix, rangePoint, sendovCritical } from '../lib/figures.mjs';
 
 const root = new URL('../', import.meta.url);
 const results = JSON.parse(await readFile(new URL('data/results.json', root), 'utf8'));
@@ -566,6 +566,33 @@ test('Sphere packing page: the bases, the table and the shares hold', () => {
   // Touching disks of radius r in rows take up 2 sqrt(3) r^2 of area each.
   assert.equal((Math.PI / (2 * Math.sqrt(3)) * 100).toFixed(1), '90.7');
   for (const value of ['<td>90.7%</td>', '<td>74.0%</td>', '<td>25.4%</td>', '<td>0.19%</td>', '78.5%', '52.4%', '0.25%', '0.6602', '0.6577', 'about 40 times']) quotes('sphere-packing', value);
+});
+
+test('Multiplication page: the rounds, the divisors and the network', () => {
+  // Three rounds of four butterflies on the digits of 31,415,926. The first output of the last round is their sum.
+  const rounds = butterflyRounds(BUTTERFLY_DIGITS);
+  assert.equal(BUTTERFLY_DIGITS.join(''), '31415926');
+  assert.deepEqual(rounds, [[8, 10, 6, 7, -2, -8, 2, -5], [14, 17, 2, 3, 0, -13, -4, -3], [31, -3, 5, -1, -13, 13, -7, -1]]);
+  assert.equal(rounds[2][0], BUTTERFLY_DIGITS.reduce((a, b) => a + b));
+  assert.deepEqual([rounds[0][0], rounds[0][4]], [3 + 5, 3 - 5]);
+  assert.equal(3 * 4, 12);
+  // The logarithms and the example divisor.
+  assert.deepEqual([2 ** 3, 2 ** 10, 2 ** 4], [8, 1024, 16]);
+  assert.equal(Math.round(Math.log2(1e9)), 30);
+  // The Lean theorem's value is 4222422970 / 2^46. The reviewed community value is 781451 / 250000000.
+  const lean = 4222422970 / 2 ** 46, community = 781451 / 250000000;
+  assert.equal(lean.toFixed(5), '0.00006');
+  assert.equal(community.toFixed(4), '0.0031');
+  assert.equal(Math.floor(1 / lean), 16665);
+  assert.equal(Math.round(1 / community), 320);
+  // The universe has about 10^80 atoms. Even the smallest entry in the table is beyond that.
+  assert.equal(Math.ceil(Math.log2(1e80)), 266);
+  // The network has 14,336 data lists, 73 rounds and 1,041,408 child calls.
+  const perList = 1041408 / 14336;
+  assert.equal(14336 * 73, 1046528);
+  assert.equal(perList.toFixed(2), '72.64');
+  assert.equal((Math.log(perList) / Math.log(73)).toFixed(4), '0.9989');
+  quotes('multiplication-below-n-log-n', '31,415,926', '10^{18}', '30 billion', '2^{-182}', '2^{2^{182}}', '0.00006', '2^{16{,}665}', '0.0031', '2^{320}', '2^{266}', '14,336', '1,046,528', '1,041,408', '72.64', 'r^{0.9989}');
 });
 
 test('figures are named, stay on theme tokens and contain no raw color', async () => {
