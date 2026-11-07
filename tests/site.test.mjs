@@ -804,6 +804,31 @@ test('proof sketches: the quoted numbers hold', () => {
   assert.equal(2 * 3 / (3 - 1), 3);
   proofQuotes('kakeya-conjecture', '\\(p = 2n/(n - 1)\\)', 'which is 4 in the plane and 3 in space');
   proofQuotes('unique-games', 'at least 1/8');
+  // Navier–Stokes: a ring that moves from radius 2 to 1 doubles its speed when radius times speed stays fixed, and a radius like the square root of the time left falls 10 times when that time falls from 0.01 to 0.0001.
+  assert.equal(2 * 3 / 1, 2 * 3);
+  assert.equal(Math.round(Math.sqrt(0.01) / Math.sqrt(0.0001)), 10);
+  proofQuotes('navier-stokes', 'from radius 2 to radius 1', 'from 0.01 to 0.0001, the radius falls 10 times');
+  // Hadamard: (+, +, +, -) has zero autocorrelation at every nonzero shift, and its sum squared is 4. At order 892 a row of length 223 with a symmetry group of order 3 has 1 + 222/3 = 75 free signs.
+  const row = [1, 1, 1, -1];
+  for (let s = 1; s < 4; s++) assert.equal(row.reduce((sum, h, j) => sum + h * row[(j + s) % 4], 0), 0);
+  assert.equal(row.reduce((a, b) => a + b) ** 2, 4);
+  assert.equal(1 + (223 - 1) / 3, 75);
+  assert.equal(4 * 223, 892);
+  assert.equal(4 * 75, 300);
+  proofQuotes('hadamard-matrices', '\\((+, +, +, -)\\)', '\\((-, +, +, +)\\)', 'only 75 of its signs', '300 free signs instead of 892', '\\(4u^2\\)');
+  // Non-sofic: on a clock with 12 positions, the positions 0 to 5 have exactly 2 links to the other 6.
+  const links = [...Array(12).keys()].filter(k => (k < 6) !== ((k + 1) % 12 < 6)).length;
+  assert.equal(links, 2);
+  proofQuotes('non-sofic-groups', 'only 2 links to the other 6');
+  // 3SUM and shortest paths: the worked sums.
+  assert.equal(5 + 9 - 14, 0);
+  assert.equal(3 - 5 + 2, 0);
+  proofQuotes('subquadratic-3sum', 'as 5, 9 and −14 do', '\\(n^{1.9992}\\)');
+  proofQuotes('all-pairs-shortest-paths', '\\(3 - 5 + 2 = 0\\)', '\\(n^{2.9995}\\)');
+  // Quantum parallel repetition: playing rounds on their own at 0.9 wins 10 with chance about 0.35 and 50 with chance about 0.005.
+  assert.equal((0.9 ** 10).toFixed(2), '0.35');
+  assert.equal((0.9 ** 50).toFixed(3), '0.005');
+  proofQuotes('quantum-parallel-repetition', 'about 0.35', 'about 0.005', 'exponent of 13', 'exponent of 3');
 });
 
 test('figures are named, stay on theme tokens and contain no raw color', async () => {

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="How the proof works: All-Pairs Shortest Paths, in plain language.">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="All-Pairs Shortest Paths: how the proof works">
+    <meta property="og:description" content="How the proof works: All-Pairs Shortest Paths, in plain language.">
+    <meta property="og:url" content="https://jehlp.net/ai-math/all-pairs-shortest-paths/proof/">
+    <meta property="og:site_name" content="jehlp.net">
+    <meta name="theme-color" content="#fbfaf7">
+    <link rel="canonical" href="https://jehlp.net/ai-math/all-pairs-shortest-paths/proof/">
+    <title>All-Pairs Shortest Paths · How the proof works · AI Math Results · jehlp.net</title>
+    <link rel="icon" href="https://jehlp.net/site-theme/v2/favicons/ai-math.png" type="image/png">
+    <script src="https://jehlp.net/site-theme/v2/theme.js?v=20261009-reading-folio"></script>
+    <link rel="stylesheet" href="https://jehlp.net/site-theme/v2/base.css?v=20261009-reading-folio">
+    <link rel="stylesheet" href="https://jehlp.net/site-theme/v2/components.css?v=20261105-math3">
+    <link rel="stylesheet" href="../../assets/styles.css?v=20261107-proofs">
+    <script src="https://jehlp.net/site-theme/v2/components.js?v=20261105-math3" defer></script>
+  </head>
+  <body data-site-tone="blue">
+    <a class="skip-link" href="#explainer">Skip to the explanation</a>
+    <header class="site-header site-header--identity">
+      <div class="site-brand"><img class="site-mark" src="https://jehlp.net/site-theme/v2/marks/ai-math.png" width="32" height="32" alt=""><span class="site-title">AI Math Results</span></div>
+      <nav aria-label="Site links"><a href="../../">All results</a><span class="site-utility-pair"><a class="site-home" href="https://jehlp.net/" aria-label="Home — jehlp.net" title="Home — jehlp.net"><span aria-hidden="true">✳</span></a><button class="theme-toggle" type="button" data-theme-toggle aria-label="Use dark theme" aria-pressed="false">◐</button></span></nav>
+    </header>
+    <main id="explainer" class="ai-math-shell" tabindex="-1">
+      <article class="prose ai-math-article">
+        <h1>All-Pairs Shortest Paths</h1>
+        <nav class="ai-math-views" aria-label="Views of this result"><a href="../">What it says</a><a href="./" aria-current="page">How the proof works</a></nav>
+<p>The cheapest trips come from a product of tables, in which taking the minimum replaces adding. A <dfn>matrix</dfn> is a table of numbers. The minimum has no fast tricks, so the proof first moves to ordinary arithmetic. Known reductions, by Virginia Vassilevska Williams and Yinzhan Xu, turn shortest paths with whole-number costs into a question about triangles.</p>
+<p>The first step is a problem called Exact Triangle. In a network with costs on the links, it asks which links lie in a triangle whose three costs add up to exactly zero. For example, a triangle with costs 3, −5 and 2 counts, because <span class="ai-math-nobreak"><math><mrow><mn>3</mn><mo>−</mo><mn>5</mn><mo>+</mo><mn>2</mn><mo>=</mo><mn>0</mn></mrow></math>.</span> A fast method for Exact Triangle gives a fast method for shortest paths. Costs here can be negative, which is why a sum of zero can occur. The reductions then split the costs into small parts and use hashing, so that the question becomes one about counting.</p>
+<p>The result is a network with three sides: two large sides and one small middle side. For many chosen pairs from the large sides, the question is how many middle points are linked to both. Put a 1 in a table <math><mi>X</mi></math> where a left point links to a middle point. Do the same for the right side in a table <span class="ai-math-nobreak"><math><mi>Y</mi></math>.</span> Then the entry of <math><mrow><mi>X</mi><mi>Y</mi></mrow></math> for a pair is the number of shared middle points.</p>
+<p>So the task is to compute chosen entries of a product of thin tables, which are tables with few columns. For example, if <math><mi>a</mi></math> and <math><mi>b</mi></math> share 3 middle points, the entry for that pair is 3. With <math><mi>N</mi></math> points on each large side, the full product has <math><msup><mi>N</mi><mn class="tml-med-pad">2</mn></msup></math> entries, and computing them all takes at least <math><msup><mi>N</mi><mn class="tml-med-pad">2</mn></msup></math> steps. Computing only the chosen entries one by one is also too slow. The new method computes just the chosen entries, in far fewer than <math><msup><mi>N</mi><mn class="tml-med-pad">2</mn></msup></math> steps in all.</p>
+<p>It follows a 1982 method of Don Coppersmith for thin products, which rests on an identity of Arnold Schönhage. The authors trace every step and drop the ones that only serve entries nobody asked for. The structure of Schönhage's identity is what makes this possible, and the trick fails for most other fast methods for tables.</p>
+<p>The same method also brings <a href="../../subquadratic-3sum/">3SUM</a> below <span class="ai-math-nobreak"><math><msup><mi>n</mi><mn>2</mn></msup></math>.</span> For shortest paths, the gain is small but real: about <math><msup><mi>n</mi><mn>2.9995</mn></msup></math> steps instead of <span class="ai-math-nobreak"><math><msup><mi>n</mi><mn>3</mn></msup></math>.</span> Josh Alman and Virginia Vassilevska Williams <a href="https://arxiv.org/abs/2610.06783">report the method</a>, and they say that Claude discovered it.</p>
+      </article>
+    </main>
+  </body>
+</html>

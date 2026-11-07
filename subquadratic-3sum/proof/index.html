@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="How the proof works: Subquadratic 3SUM, in plain language.">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Subquadratic 3SUM: how the proof works">
+    <meta property="og:description" content="How the proof works: Subquadratic 3SUM, in plain language.">
+    <meta property="og:url" content="https://jehlp.net/ai-math/subquadratic-3sum/proof/">
+    <meta property="og:site_name" content="jehlp.net">
+    <meta name="theme-color" content="#fbfaf7">
+    <link rel="canonical" href="https://jehlp.net/ai-math/subquadratic-3sum/proof/">
+    <title>Subquadratic 3SUM · How the proof works · AI Math Results · jehlp.net</title>
+    <link rel="icon" href="https://jehlp.net/site-theme/v2/favicons/ai-math.png" type="image/png">
+    <script src="https://jehlp.net/site-theme/v2/theme.js?v=20261009-reading-folio"></script>
+    <link rel="stylesheet" href="https://jehlp.net/site-theme/v2/base.css?v=20261009-reading-folio">
+    <link rel="stylesheet" href="https://jehlp.net/site-theme/v2/components.css?v=20261105-math3">
+    <link rel="stylesheet" href="../../assets/styles.css?v=20261107-proofs">
+    <script src="https://jehlp.net/site-theme/v2/components.js?v=20261105-math3" defer></script>
+  </head>
+  <body data-site-tone="blue">
+    <a class="skip-link" href="#explainer">Skip to the explanation</a>
+    <header class="site-header site-header--identity">
+      <div class="site-brand"><img class="site-mark" src="https://jehlp.net/site-theme/v2/marks/ai-math.png" width="32" height="32" alt=""><span class="site-title">AI Math Results</span></div>
+      <nav aria-label="Site links"><a href="../../">All results</a><span class="site-utility-pair"><a class="site-home" href="https://jehlp.net/" aria-label="Home — jehlp.net" title="Home — jehlp.net"><span aria-hidden="true">✳</span></a><button class="theme-toggle" type="button" data-theme-toggle aria-label="Use dark theme" aria-pressed="false">◐</button></span></nav>
+    </header>
+    <main id="explainer" class="ai-math-shell" tabindex="-1">
+      <article class="prose ai-math-article">
+        <h1>Subquadratic 3SUM</h1>
+        <nav class="ai-math-views" aria-label="Views of this result"><a href="../">What it says</a><a href="./" aria-current="page">How the proof works</a></nav>
+<p>3SUM asks if three numbers from a list add up to zero, as 5, 9 and −14 do. The proof does not attack 3SUM directly. Known reductions already turn 3SUM into a question about triangles in a network, and the new work is a fast answer to that question. The same method also gives the result on <a href="../../all-pairs-shortest-paths/">all-pairs shortest paths</a>.</p>
+<p>The reductions, by Mihai Pătraşcu and later authors, use hashing. They spread the numbers into many small buckets, so that three numbers that add to zero must fall into buckets that fit together. The result is a network with three sides: two large sides and one small middle side. The question is then, for many chosen pairs from the two large sides, how many middle points are linked to both. That count is the number of triangles through the pair.</p>
+<p>Counting these triangles is a matrix product. A <dfn>matrix</dfn> is a table of numbers. Put a 1 in a table <math><mi>X</mi></math> where a left point links to a middle point. Do the same for the right side in a table <span class="ai-math-nobreak"><math><mi>Y</mi></math>.</span> Then the entry of the product <math><mrow><mi>X</mi><mi>Y</mi></mrow></math> for a pair is exactly the number of middle points linked to both. For example, if <math><mi>a</mi></math> and <math><mi>b</mi></math> share 3 middle points, that entry is 3.</p>
+<p>The tables are thin. With <math><mi>N</mi></math> points on each large side and <math><mi>D</mi></math> middle points, the product has <math><msup><mi>N</mi><mn class="tml-med-pad">2</mn></msup></math> entries. Any method that computes all of them needs at least <math><msup><mi>N</mi><mn class="tml-med-pad">2</mn></msup></math> steps, which is too slow. Computing only the wanted entries one by one costs <math><mi>D</mi></math> steps each, which is also too slow when there are many of them. The new method computes just the wanted entries, in far fewer than <math><msup><mi>N</mi><mn class="tml-med-pad">2</mn></msup></math> steps in all.</p>
+<p>It starts from a method for thin products by Don Coppersmith, from 1982, which rests on an identity of Arnold Schönhage. The authors follow every step of that method and remove the steps that only serve unwanted entries. Schönhage's identity has enough structure that many steps can go. This trick fails for most other fast methods for matrices.</p>
+<p>The saving per entry is small, about a fixed power of <span class="ai-math-nobreak"><math><mi>D</mi></math>,</span> but it is a true power, not just a smaller fixed multiplier. That is enough to bring 3SUM below <span class="ai-math-nobreak"><math><msup><mi>n</mi><mn>2</mn></msup></math>,</span> to about <span class="ai-math-nobreak"><math><msup><mi>n</mi><mn>1.9992</mn></msup></math>.</span> Josh Alman and Virginia Vassilevska Williams <a href="https://arxiv.org/abs/2610.06783">report the method</a>, and they say that Claude discovered it.</p>
+      </article>
+    </main>
+  </body>
+</html>

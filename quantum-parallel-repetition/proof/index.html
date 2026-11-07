@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="How the proof works: Quantum Parallel Repetition, in plain language.">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Quantum Parallel Repetition: how the proof works">
+    <meta property="og:description" content="How the proof works: Quantum Parallel Repetition, in plain language.">
+    <meta property="og:url" content="https://jehlp.net/ai-math/quantum-parallel-repetition/proof/">
+    <meta property="og:site_name" content="jehlp.net">
+    <meta name="theme-color" content="#fbfaf7">
+    <link rel="canonical" href="https://jehlp.net/ai-math/quantum-parallel-repetition/proof/">
+    <title>Quantum Parallel Repetition · How the proof works · AI Math Results · jehlp.net</title>
+    <link rel="icon" href="https://jehlp.net/site-theme/v2/favicons/ai-math.png" type="image/png">
+    <script src="https://jehlp.net/site-theme/v2/theme.js?v=20261009-reading-folio"></script>
+    <link rel="stylesheet" href="https://jehlp.net/site-theme/v2/base.css?v=20261009-reading-folio">
+    <link rel="stylesheet" href="https://jehlp.net/site-theme/v2/components.css?v=20261105-math3">
+    <link rel="stylesheet" href="../../assets/styles.css?v=20261107-proofs">
+    <script src="https://jehlp.net/site-theme/v2/components.js?v=20261105-math3" defer></script>
+  </head>
+  <body data-site-tone="blue">
+    <a class="skip-link" href="#explainer">Skip to the explanation</a>
+    <header class="site-header site-header--identity">
+      <div class="site-brand"><img class="site-mark" src="https://jehlp.net/site-theme/v2/marks/ai-math.png" width="32" height="32" alt=""><span class="site-title">AI Math Results</span></div>
+      <nav aria-label="Site links"><a href="../../">All results</a><span class="site-utility-pair"><a class="site-home" href="https://jehlp.net/" aria-label="Home — jehlp.net" title="Home — jehlp.net"><span aria-hidden="true">✳</span></a><button class="theme-toggle" type="button" data-theme-toggle aria-label="Use dark theme" aria-pressed="false">◐</button></span></nav>
+    </header>
+    <main id="explainer" class="ai-math-shell" tabindex="-1">
+      <article class="prose ai-math-article">
+        <h1>Quantum Parallel Repetition</h1>
+        <nav class="ai-math-views" aria-label="Views of this result"><a href="../">What it says</a><a href="./" aria-current="page">How the proof works</a></nav>
+<p>Suppose one round can be won with a chance of at most 0.9. Playing each round on its own wins all 10 rounds with a chance of about 0.35, and all 50 with a chance of about 0.005. Clever plans can beat playing each round on its own. The proof must show that winning many rounds at once is still exponentially unlikely, even with entanglement. The players may answer each round using all of their questions, so the rounds are not independent. The classical proof, by Thomas Holenstein after Ran Raz, handles this by looking at one round at a time.</p>
+<p>The idea is to condition on success. Suppose the players won some rounds that the referee checked. Look at a round that was not checked. If winning the checked rounds were not rare, that unchecked round would still look almost like a fresh, single round to each player. Then the players could use their plan for many rounds to play one round, and win it more often than the best one-round plan allows. That is impossible, so winning the checked rounds must be rare.</p>
+<p>The heart of this is a count of information. Each round reveals at most a fixed number of bits, from the size of the answers. So conditioning on many wins can shift only a limited amount of information into each round, on average. With little shift, each player can rebuild a believable view of the unchecked round from their own question, using shared random numbers. This step is called correlated sampling.</p>
+<p>Entanglement breaks the last step. The players' views are now quantum states, and quantum versions of correlated sampling lose accuracy when the conditioning event is rare. Henry Yuen proved in 2016 that the chance of winning every round falls like a power of the number of rounds. Exponential decay needed a way to avoid that loss.</p>
+<p>The new ingredient is an estimate that stays stable under conditioning on a rare event. It does not get worse as the chance of the event falls. With it, the conditioning argument runs as in the classical case, and the chance of winning all <math><mi>n</mi></math> rounds falls exponentially in <span class="ai-math-nobreak"><math><mi>n</mi></math>.</span> The rate depends on the gap below 100% and on the number of possible answers.</p>
+<p><a href="https://cdn.openai.com/pdf/ten-proofs-oai.pdf">OpenAI reports</a> this proof, with an exponent of 13 on the gap that it does not claim is best. <a href="https://arxiv.org/abs/2610.21410">Rahul Jain</a> later gave another proof, based on quantum relative entropy, with an exponent of 3.</p>
+      </article>
+    </main>
+  </body>
+</html>
