@@ -128,5 +128,10 @@
     "slug": "nine-loop-amplitude",
     "title": "Nine-Loop Amplitude",
     "description": "What it means to compute how six particles scatter at nine loops."
+  },
+  {
+    "slug": "aaronson-ambainis",
+    "title": "Aaronson–Ambainis Conjecture",
+    "description": "Whether a quantum computer needs a promise about its input to beat an ordinary computer by far."
   }
 ]

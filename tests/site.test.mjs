@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import { renderAiMath, typesetMath, mathChars, validateAiMath } from '../lib/pages.mjs';
-import { APSP_EDGES, BUTTERFLY_DIGITS, EHRHART_TRIANGLE, ES_EDGES, ES_TREE, PETERSEN_COVER, PETERSEN_EDGES, SENDOV_ZEROS, UG_CONSTRAINTS, UG_VALUES, ZETA_ZEROS, addPositions, butterflyRounds, deltoidNeedle, deltoidPoint, figures, fishnetGraph, k5Color, paleyMatrix, rangePoint, sendovCritical } from '../lib/figures.mjs';
+import { APSP_EDGES, BUTTERFLY_DIGITS, EHRHART_TRIANGLE, ES_EDGES, ES_TREE, PETERSEN_COVER, PETERSEN_EDGES, SENDOV_ZEROS, UG_CONSTRAINTS, UG_VALUES, ZETA_ZEROS, addPositions, averageCube, butterflyRounds, deltoidNeedle, deltoidPoint, figures, fishnetGraph, k5Color, paleyMatrix, rangePoint, sendovCritical } from '../lib/figures.mjs';
 
 const root = new URL('../', import.meta.url);
 const results = JSON.parse(await readFile(new URL('data/results.json', root), 'utf8'));
@@ -665,6 +665,33 @@ test('Nine-loop page: the diagram, the word counts and the quoted numbers hold',
   assert.equal(residue(2147483647n), 829521918n);
   assert.equal(residue(2147483629n), 1173913588n);
   quotes('nine-loop-amplitude', 'bbfddedfb<wbr>dfaafefde', '-47.7', '674 million', '0.00000000067', '9^{18}', '150 quadrillion', '-105{,}757/65{,}536', '5,431', '2.5 trillion', '424 \\times 5{,}431', '2,302,744', '107,053');
+});
+
+test('Aaronson–Ambainis page: the influences, the variances and the cube hold', () => {
+  const lists = n => Array.from({ length: 2 ** n }, (_, k) => Array.from({ length: n }, (_, i) => (k >> i) & 1));
+  const average = bits => Q.of(bits.reduce((a, b) => a + b, 0), bits.length);
+  const mean = values => values.reduce((a, b) => a.add(b), Q.of(0)).mul(Q.of(1, values.length));
+  const flip = (bits, i) => bits.map((b, j) => (j === i ? 1 - b : b));
+  // For the average of n bits, each influence is 1/n^2, the variance is 1/(4n), and the influence is 16 times the variance squared.
+  for (let n = 1; n <= 10; n++) {
+    const all = lists(n), middle = mean(all.map(average));
+    const variance = mean(all.map(bits => average(bits).sub(middle).pow(2)));
+    assert.ok(variance.eq(Q.of(1, 4 * n)), `variance for ${n}`);
+    for (let i = 0; i < n; i++) {
+      const influence = mean(all.map(bits => average(bits).sub(average(flip(bits, i))).pow(2)));
+      assert.ok(influence.eq(Q.of(1, n * n)), `influence for ${n}`);
+      assert.ok(influence.eq(variance.pow(2).mul(Q.of(16))));
+    }
+  }
+  assert.ok(Q.of(1, 9).eq(Q.of(1, 3).pow(2)));
+  assert.ok(Q.of(1, 12).eq(Q.of(1, 4 * 3)));
+  assert.equal(1 / 100 ** 2, 0.0001);
+  assert.equal(1 / (4 * 100), 0.0025);
+  // The figure has the 8 lists of 3 bits, and each first-bit edge changes the average by 1/3.
+  const corners = averageCube();
+  assert.equal(new Set(corners.map(bits => bits.join(''))).size, 8);
+  for (const bits of corners.filter(bits => bits[0] === 0)) assert.ok(average(flip(bits, 0)).sub(average(bits)).eq(Q.of(1, 3)));
+  quotes('aaronson-ambainis', '\\(1/3\\)', '\\(1/9\\)', '\\(1/12\\)', '\\(1/N^2\\)', '\\(1/(4N)\\)', '0.0001', '0.0025', '16 times the square', '(\\varepsilon/d)^C', '\\(C = 7\\)', '\\(2T\\)');
 });
 
 test('figures are named, stay on theme tokens and contain no raw color', async () => {
