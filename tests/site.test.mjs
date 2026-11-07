@@ -772,6 +772,38 @@ test('proof sketches: the quoted numbers hold', () => {
   assert.equal(Math.round(1.9 ** 10), 613);
   assert.equal(2 ** 10, 1024);
   proofQuotes('multiplication-below-n-log-n', '\\((1, 2, 3, 4)\\)', '\\((-4, 1, 2, 3)\\)', '8 such shifts', 'about 613 instead of 1,024', 'within 1/2');
+  // Hilbert's tenth: on y^2 = x^3 - 2, the tops of the first coordinates of P = (3, 5), 2P, ..., 6P have 1, 3, 6, 10, 15 and 21 digits.
+  const inv = q => new Q(q.d, q.n);
+  const addPoints = ([x1, y1], [x2, y2]) => {
+    const slope = x1.eq(x2) && y1.eq(y2) ? Q.of(3).mul(x1.pow(2)).mul(inv(Q.of(2).mul(y1))) : y2.sub(y1).mul(inv(x2.sub(x1)));
+    const x3 = slope.pow(2).sub(x1).sub(x2);
+    return [x3, slope.mul(x1.sub(x3)).sub(y1)];
+  };
+  const P0 = [Q.of(3), Q.of(5)], digits = [];
+  assert.ok(P0[1].pow(2).eq(P0[0].pow(3).sub(Q.of(2))));
+  for (let k = 1, R = P0; k <= 6; k++, R = addPoints(R, P0)) digits.push(String(R[0].n < 0n ? -R[0].n : R[0].n).length);
+  assert.deepEqual(digits, [1, 3, 6, 10, 15, 21]);
+  proofQuotes('hilberts-tenth-problem', '\\((3, 5)\\)', '\\(y^2 = x^3 - 2\\)', '1, 3, 6, 10, 15 and 21 digits', 'five fixed points');
+  // ETH: the rule formula is 0 only when the rule fails, 10 groups of 10 switches take 10,240 settings, and three values fix a quadratic at 0.
+  for (const [a, b, c] of [[0,0,0],[0,0,1],[0,1,0],[0,1,1],[1,0,0],[1,0,1],[1,1,0],[1,1,1]]) assert.equal(1 - (1 - a) * b * (1 - c), a === 0 && b === 1 && c === 0 ? 0 : 1);
+  assert.equal(10 * 2 ** 10, 10240);
+  for (const [c0, c1, c2] of [[5, -2, 1], [0, 3, 7], [-4, 1, -9]]) {
+    const H = x => c0 + c1 * x + c2 * x * x;
+    assert.equal(3 * H(1) - 3 * H(2) + H(3), H(0));
+  }
+  proofQuotes('exponential-time-hypothesis', '\\(1 - (1 - a)b(1 - c)\\)', '10 × 1,024, or 10,240', '\\(H(0) = 3H(1) - 3H(2) + H(3)\\)');
+  // Quasi-Riemann: a cube root of 1 other than 1 satisfies 1 + w + w^2 = 0, and 11/12 and 7/8 round as stated.
+  const w = [-1 / 2, Math.sqrt(3) / 2], mulC = ([a, b], [c, d]) => [a * c - b * d, a * d + b * c], w2 = mulC(w, w), w3 = mulC(w2, w);
+  assert.ok(Math.abs(w3[0] - 1) < 1e-12 && Math.abs(w3[1]) < 1e-12);
+  assert.ok(Math.abs(1 + w[0] + w2[0]) < 1e-12 && Math.abs(w[1] + w2[1]) < 1e-12);
+  assert.equal((11 / 12).toFixed(3), '0.917');
+  assert.equal(7 / 8, 0.875);
+  proofQuotes('quasi-riemann-hypothesis', '\\(11/12\\), or about 0.917', '\\(7/8\\), which is 0.875', '\\(1 + \\omega + \\omega^2 = 0\\)');
+  // Kakeya: the critical power 2n/(n - 1) is 4 in the plane and 3 in space.
+  assert.equal(2 * 2 / (2 - 1), 4);
+  assert.equal(2 * 3 / (3 - 1), 3);
+  proofQuotes('kakeya-conjecture', '\\(p = 2n/(n - 1)\\)', 'which is 4 in the plane and 3 in space');
+  proofQuotes('unique-games', 'at least 1/8');
 });
 
 test('figures are named, stay on theme tokens and contain no raw color', async () => {

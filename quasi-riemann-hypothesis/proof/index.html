@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="How the proof works: Quasi-Riemann Hypothesis, in plain language.">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Quasi-Riemann Hypothesis: how the proof works">
+    <meta property="og:description" content="How the proof works: Quasi-Riemann Hypothesis, in plain language.">
+    <meta property="og:url" content="https://jehlp.net/ai-math/quasi-riemann-hypothesis/proof/">
+    <meta property="og:site_name" content="jehlp.net">
+    <meta name="theme-color" content="#fbfaf7">
+    <link rel="canonical" href="https://jehlp.net/ai-math/quasi-riemann-hypothesis/proof/">
+    <title>Quasi-Riemann Hypothesis · How the proof works · AI Math Results · jehlp.net</title>
+    <link rel="icon" href="https://jehlp.net/site-theme/v2/favicons/ai-math.png" type="image/png">
+    <script src="https://jehlp.net/site-theme/v2/theme.js?v=20261009-reading-folio"></script>
+    <link rel="stylesheet" href="https://jehlp.net/site-theme/v2/base.css?v=20261009-reading-folio">
+    <link rel="stylesheet" href="https://jehlp.net/site-theme/v2/components.css?v=20261105-math3">
+    <link rel="stylesheet" href="../../assets/styles.css?v=20261107-proofs">
+    <script src="https://jehlp.net/site-theme/v2/components.js?v=20261105-math3" defer></script>
+  </head>
+  <body data-site-tone="blue">
+    <a class="skip-link" href="#explainer">Skip to the explanation</a>
+    <header class="site-header site-header--identity">
+      <div class="site-brand"><img class="site-mark" src="https://jehlp.net/site-theme/v2/marks/ai-math.png" width="32" height="32" alt=""><span class="site-title">AI Math Results</span></div>
+      <nav aria-label="Site links"><a href="../../">All results</a><span class="site-utility-pair"><a class="site-home" href="https://jehlp.net/" aria-label="Home — jehlp.net" title="Home — jehlp.net"><span aria-hidden="true">✳</span></a><button class="theme-toggle" type="button" data-theme-toggle aria-label="Use dark theme" aria-pressed="false">◐</button></span></nav>
+    </header>
+    <main id="explainer" class="ai-math-shell" tabindex="-1">
+      <article class="prose ai-math-article">
+        <h1>Quasi-Riemann Hypothesis</h1>
+        <nav class="ai-math-views" aria-label="Views of this result"><a href="../">What it says</a><a href="./" aria-current="page">How the proof works</a></nav>
+<p>The proof does not search for zeros. It shows that a zero far to the right would leave a mark on a certain sum, and that the sum has no such mark. It also works with a whole family of functions like zeta at once, because its tools mix members of the family. A <dfn>function</dfn> is a rule that gives an output for each input. Zeta is one member of this family, which the paper calls L-functions.</p>
+<p>The sum comes from arithmetic with the numbers <span class="ai-math-nobreak"><math><mrow><mi>a</mi><mo>+</mo><mi>b</mi><mi>ω</mi></mrow></math>,</span> where <math><mi>a</mi></math> and <math><mi>b</mi></math> are whole numbers. Here <math><mi>ω</mi></math> is a cube root of 1, other than 1 itself. So <math><mrow><msup><mi>ω</mi><mn>3</mn></msup><mo>=</mo><mn>1</mn></mrow></math> and <span class="ai-math-nobreak"><math><mrow><mn>1</mn><mo>+</mo><mi>ω</mi><mo>+</mo><msup><mi>ω</mi><mn>2</mn></msup><mo>=</mo><mn>0</mn></mrow></math>.</span> These numbers have their own primes, and Samuel Patterson built a special series over them, called the cubic theta series. The proof averages its terms with weights that pick out one member of the family.</p>
+<p>The key is that the same sum has two exact formulas. A symmetry of the cubic theta series gives the first, and it shows directly that the sum is small. Poisson summation gives the second. It rewrites a sum over a grid of points as a sum over waves on that grid. In the second formula, one main term contains 1 divided by the L-function.</p>
+<p>A zero of the L-function makes 1 divided by it very large near that zero. If a zero sat at real part <span class="ai-math-nobreak"><math><mi>β</mi></math>,</span> the main term would grow with the length of the sum like a power linked to <span class="ai-math-nobreak"><math><mi>β</mi></math>.</span> The first formula forbids that growth whenever <math><mi>β</mi></math> is above the target line. So the proof shows that 1 divided by each function continues smoothly across that region, and no zero can sit there.</p>
+<p>The other terms of the second formula need their own control. Suppose some of them had zeros far to the right. A "zero detector" turns those zeros into long sums over primes that would be unusually large. A tool called the large sieve limits how many such sums can be large at once. This is why the whole family is needed, even for zeta itself.</p>
+<p>The proof runs this argument twice. The first pass clears every zero with real part above <span class="ai-math-nobreak"><math><mrow><mn>11</mn><mi>/</mi><mn>12</mn></mrow></math>,</span> or about 0.917. The second pass starts from that, uses two lengths that are no longer equal, and adds a correction at chosen primes. It clears every zero above <span class="ai-math-nobreak"><math><mrow><mn>7</mn><mi>/</mi><mn>8</mn></mrow></math>,</span> which is 0.875. <a href="https://github.com/openai/math/blob/main/preprints/The-Quasi-Riemann-Hypothesis-September-30-2026/paper.pdf">OpenAI reports</a> this proof.</p>
+      </article>
+    </main>
+  </body>
+</html>
