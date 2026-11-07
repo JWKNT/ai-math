@@ -16,7 +16,7 @@
     <script src="https://jehlp.net/site-theme/v2/theme.js?v=20261009-reading-folio"></script>
     <link rel="stylesheet" href="https://jehlp.net/site-theme/v2/base.css?v=20261009-reading-folio">
     <link rel="stylesheet" href="https://jehlp.net/site-theme/v2/components.css?v=20261105-math3">
-    <link rel="stylesheet" href="../assets/styles.css?v=20261107-proofs">
+    <link rel="stylesheet" href="../assets/styles.css?v=20261105-plain2">
     <script src="https://jehlp.net/site-theme/v2/components.js?v=20261105-math3" defer></script>
   </head>
   <body data-site-tone="blue">
@@ -28,7 +28,6 @@
     <main id="explainer" class="ai-math-shell" tabindex="-1">
       <article class="prose ai-math-article">
         <h1>Aaronson–Ambainis Conjecture</h1>
-        <nav class="ai-math-views" aria-label="Views of this result"><a href="./" aria-current="page">What it says</a><a href="proof/">How the proof works</a></nav>
 <p>Here the input is a long list of bits, each 0 or 1. A program learns about the list by asking for one entry at a time, and each request is a <dfn>query</dfn>. A quantum computer can sometimes answer a yes or no question about the list with far fewer queries than an ordinary computer.</p>
 <p>The largest known gaps need a promise about the list. For example, if the list is promised to repeat with a fixed period, a quantum computer finds the period with exponentially fewer queries. <a href="https://arxiv.org/abs/0911.0996">Scott Aaronson and Andris Ambainis conjectured</a> that without a promise, the gap is never that large. Suppose that a quantum computer uses <math><mi>T</mi></math> queries. On most lists, an ordinary computer should then give nearly the same answers with a fixed power of <math><mi>T</mi></math> queries.</p>
 <p>A <dfn>polynomial</dfn> is a formula that only adds and multiplies numbers and variables. Its <dfn>degree</dfn> is the largest number of variables that one term multiplies together. Write the bits of the list as variables <span class="ai-math-nobreak"><math><mrow><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>x</mi><mn>2</mn></msub><mo separator="true">,</mo><mi>…</mi><mo separator="true">,</mo><msub><mi>x</mi><mi>N</mi></msub></mrow></math>.</span> After <math><mi>T</mi></math> queries, the chance that a quantum computer says yes <a href="https://arxiv.org/abs/quant-ph/9802049">is a polynomial in these bits</a>, of degree at most <span class="ai-math-nobreak"><math><mrow><mn>2</mn><mi>T</mi></mrow></math>.</span> Because it is a chance, its value is between 0 and 1 on every list.</p>

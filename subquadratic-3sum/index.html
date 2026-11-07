@@ -16,7 +16,7 @@
     <script src="https://jehlp.net/site-theme/v2/theme.js?v=20261009-reading-folio"></script>
     <link rel="stylesheet" href="https://jehlp.net/site-theme/v2/base.css?v=20261009-reading-folio">
     <link rel="stylesheet" href="https://jehlp.net/site-theme/v2/components.css?v=20261105-math3">
-    <link rel="stylesheet" href="../assets/styles.css?v=20261107-proofs">
+    <link rel="stylesheet" href="../assets/styles.css?v=20261105-plain2">
     <script src="https://jehlp.net/site-theme/v2/components.js?v=20261105-math3" defer></script>
   </head>
   <body data-site-tone="blue">
@@ -28,7 +28,6 @@
     <main id="explainer" class="ai-math-shell" tabindex="-1">
       <article class="prose ai-math-article">
         <h1>Subquadratic 3SUM</h1>
-        <nav class="ai-math-views" aria-label="Views of this result"><a href="./" aria-current="page">What it says</a><a href="proof/">How the proof works</a></nav>
 <p><dfn>3SUM</dfn> is a simple puzzle. You have a list of <math><mi>n</mi></math> whole numbers, some positive and some negative. The puzzle asks if three of them add up to exactly 0. In the list <span class="ai-math-nobreak"><math><mrow><mo form="prefix" stretchy="false">−</mo><mn>7</mn><mo separator="true">,</mo><mo form="prefix" stretchy="false">−</mo><mn>3</mn><mo separator="true">,</mo><mn>2</mn><mo separator="true">,</mo><mn>5</mn><mo separator="true">,</mo><mn>8</mn><mo separator="true">,</mo><mn>11</mn></mrow></math>,</span> the answer is yes, because <span class="ai-math-nobreak"><math><mrow><mo form="prefix" stretchy="false">−</mo><mn>7</mn><mo>+</mo><mn>2</mn><mo>+</mo><mn>5</mn><mo>=</mo><mn>0</mn></mrow></math>.</span></p>
 <p>The plain method tries every group of three. With 1,000 numbers, that is about 166 million groups. A better method sorts the list first. Then, for each number, it looks for a matching pair by moving in from both ends of the list.</p>
 <p>Here is that method for <span class="ai-math-nobreak"><math><mrow><mo form="prefix" stretchy="false">−</mo><mn>7</mn></mrow></math>.</span> We need two numbers from the rest of the list that add up to 7. Start with the two ends of the list. If the sum is too big, drop the largest number. If it is too small, drop the smallest number.</p>

@@ -16,7 +16,7 @@
     <script src="https://jehlp.net/site-theme/v2/theme.js?v=20261009-reading-folio"></script>
     <link rel="stylesheet" href="https://jehlp.net/site-theme/v2/base.css?v=20261009-reading-folio">
     <link rel="stylesheet" href="https://jehlp.net/site-theme/v2/components.css?v=20261105-math3">
-    <link rel="stylesheet" href="../assets/styles.css?v=20261107-proofs">
+    <link rel="stylesheet" href="../assets/styles.css?v=20261105-plain2">
     <script src="https://jehlp.net/site-theme/v2/components.js?v=20261105-math3" defer></script>
   </head>
   <body data-site-tone="blue">
@@ -28,7 +28,6 @@
     <main id="explainer" class="ai-math-shell" tabindex="-1">
       <article class="prose ai-math-article">
         <h1>Multiplying Faster Than n log n</h1>
-        <nav class="ai-math-views" aria-label="Views of this result"><a href="./" aria-current="page">What it says</a><a href="proof/">How the proof works</a></nav>
 <p>The school method multiplies each digit of one number by each digit of the other. With <math><mi>n</mi></math> digits in each number, that is <math><mrow><mi>n</mi><mo>×</mo><mi>n</mi><mo>=</mo><msup><mi>n</mi><mn>2</mn></msup></mrow></math> small products. For two numbers with a billion digits, it is <math><msup><mn>10</mn><mn>18</mn></msup></math> small products.</p>
 <p>Faster methods cut the numbers into short pieces and mix the pieces in rounds. This mixing, a <dfn>Fourier transform</dfn>, turns one long multiplication into many short ones. Most of its work is one action, called a <dfn>butterfly</dfn>. A butterfly takes two numbers <math><mi>a</mi></math> and <span class="ai-math-nobreak"><math><mi>b</mi></math>,</span> and it gives <math><mrow><mi>a</mi><mo>+</mo><mi>b</mi></mrow></math> and <span class="ai-math-nobreak"><math><mrow><mi>a</mi><mo>−</mo><mi>b</mi></mrow></math>.</span> A list of 8 pieces takes 3 rounds of 4 butterflies, so 12 in all.</p>
 <figure class="ai-math-side">
