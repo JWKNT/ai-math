@@ -142,16 +142,20 @@ class Q {
 const isqrt = n => { let x = n, y = (x + 1n) / 2n; while (y < x) { x = y; y = (x + n / x) / 2n; } return x; };
 
 test('Diophantine page: the sizes and the worked tests', () => {
-  // The published equation has variable 0 and 961 more, and its largest number is 64 times 3 to the power 2^28.
-  assert.equal(961 + 1, 962);
-  assert.equal(Math.floor(2 ** 28 * Math.log10(3) + Math.log10(64)) + 1, 128076264);
-  // The version with every number written out has a largest number below 2^80.
-  const written = 685783949153203534233890n;
-  assert.equal(String(written).length, 24);
-  assert.ok(written < 2n ** 80n);
+  // The published equation has variable 0 and 522 more, and its largest number is 64 times 3 to the power 2^27.
+  assert.equal(522 + 1, 523);
+  const digits = Math.floor(2 ** 27 * Math.log10(3) + Math.log10(64)) + 1;
+  assert.equal(digits, 64038133);
+  assert.equal(Math.round(digits / 1e6), 64);
+  // The 540-variable version writes every number out. Its largest is 3^2048 + 1005072314631333, below 2^3247.
+  const written = 3n ** 2048n + 1005072314631333n;
+  assert.equal(String(written).length, 978);
+  assert.equal(written.toString(2).length, 3247);
   assert.ok(Q.of(3, 4).mul(Q.of(4, 3)).eq(Q.of(1)));
   assert.ok(Q.of(3, 2).pow(2).eq(Q.of(9, 4)));
-  quotes('z-diophantine-in-q', '962 variables', '961 extra variables', 'highest power is 4', '55,409 terms', '64 \\times 3^{2^{28}}', '128 million digits', '4,973 variables', '24 digits', '919 squares', '9/4');
+  // A fraction whose square is a whole number is itself whole, and 2 is not the square of a whole number.
+  assert.notEqual(isqrt(2n) ** 2n, 2n);
+  quotes('z-diophantine-in-q', '523 variables', '522 extra variables', 'highest power is 4', '35,163 terms', '64 \\times 3^{2^{27}}', '64 million digits', '540 variables', '978 digits', '492 squares', '9/4');
 });
 
 test('ETH page: the settings, the years and the threshold', () => {
