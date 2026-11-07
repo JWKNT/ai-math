@@ -127,7 +127,8 @@
   {
     "slug": "nine-loop-amplitude",
     "title": "Nine-Loop Amplitude",
-    "description": "What it means to compute how six particles scatter at nine loops."
+    "description": "What it means to compute how six particles scatter at nine loops.",
+    "proofLabel": "How the calculation works"
   },
   {
     "slug": "aaronson-ambainis",

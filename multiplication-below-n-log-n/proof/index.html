@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="How the proof works: Multiplying Faster Than n log n, in plain language.">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Multiplying Faster Than n log n: how the proof works">
+    <meta property="og:description" content="How the proof works: Multiplying Faster Than n log n, in plain language.">
+    <meta property="og:url" content="https://jehlp.net/ai-math/multiplication-below-n-log-n/proof/">
+    <meta property="og:site_name" content="jehlp.net">
+    <meta name="theme-color" content="#fbfaf7">
+    <link rel="canonical" href="https://jehlp.net/ai-math/multiplication-below-n-log-n/proof/">
+    <title>Multiplying Faster Than n log n · How the proof works · AI Math Results · jehlp.net</title>
+    <link rel="icon" href="https://jehlp.net/site-theme/v2/favicons/ai-math.png" type="image/png">
+    <script src="https://jehlp.net/site-theme/v2/theme.js?v=20261009-reading-folio"></script>
+    <link rel="stylesheet" href="https://jehlp.net/site-theme/v2/base.css?v=20261009-reading-folio">
+    <link rel="stylesheet" href="https://jehlp.net/site-theme/v2/components.css?v=20261105-math3">
+    <link rel="stylesheet" href="../../assets/styles.css?v=20261107-proofs">
+    <script src="https://jehlp.net/site-theme/v2/components.js?v=20261105-math3" defer></script>
+  </head>
+  <body data-site-tone="blue">
+    <a class="skip-link" href="#explainer">Skip to the explanation</a>
+    <header class="site-header site-header--identity">
+      <div class="site-brand"><img class="site-mark" src="https://jehlp.net/site-theme/v2/marks/ai-math.png" width="32" height="32" alt=""><span class="site-title">AI Math Results</span></div>
+      <nav aria-label="Site links"><a href="../../">All results</a><span class="site-utility-pair"><a class="site-home" href="https://jehlp.net/" aria-label="Home — jehlp.net" title="Home — jehlp.net"><span aria-hidden="true">✳</span></a><button class="theme-toggle" type="button" data-theme-toggle aria-label="Use dark theme" aria-pressed="false">◐</button></span></nav>
+    </header>
+    <main id="explainer" class="ai-math-shell" tabindex="-1">
+      <article class="prose ai-math-article">
+        <h1>Multiplying Faster Than n log n</h1>
+        <nav class="ai-math-views" aria-label="Views of this result"><a href="../">What it says</a><a href="./" aria-current="page">How the proof works</a></nav>
+<p>A fast method multiplies two numbers by cutting them into pieces and running Fourier transforms, as the <a href="../">result page</a> explains. On a Turing machine, two costs then meet. Each round of butterflies passes over all <math><mi>n</mi></math> digits, and between rounds the data must move along the tapes. With about <math><mrow><mrow><mi>log</mi><mo>⁡</mo><mspace width="0.1667em"></mspace></mrow><mi>n</mi></mrow></math> rounds, each of the two costs reaches <math><mrow><mi>n</mi><mrow><mspace width="0.1667em"></mspace><mi>log</mi><mo>⁡</mo><mspace width="0.1667em"></mspace></mrow><mi>n</mi></mrow></math> by itself. So the proof must save on both the arithmetic and the moving.</p>
+<p>The proof starts from the method of David Harvey and Joris van der Hoeven, which reaches <span class="ai-math-nobreak"><math><mrow><mi>n</mi><mrow><mspace width="0.1667em"></mspace><mi>log</mi><mo>⁡</mo><mspace width="0.1667em"></mspace></mrow><mi>n</mi></mrow></math>.</span> That method reshapes the transforms so that every length is a power of 2. It also stores numbers as lists that wrap around with a change of sign. For lists of length 4, multiplying by <math><mi>y</mi></math> turns <math><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo separator="true">,</mo><mn>3</mn><mo separator="true">,</mo><mn>4</mn><mo fence="true" form="postfix" stretchy="false">)</mo></mrow></math> into <span class="ai-math-nobreak"><math><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mo form="prefix" stretchy="false">−</mo><mn>4</mn><mo separator="true">,</mo><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo separator="true">,</mo><mn>3</mn><mo fence="true" form="postfix" stretchy="false">)</mo></mrow></math>.</span> Each entry moves one place, and the last one comes back to the front with its sign changed. So a multiplication by <math><mi>y</mi></math> costs only a shift, and 8 such shifts give back the list.</p>
+<p>The new step is two tape procedures that beat one pass per round. The first swaps two blocks of address digits, which reorders the data, for less than a pass per digit. The second applies many butterfly rounds at once, to the same block of data. Each comes from a small, fixed network of gates. The network exchanges two banks of values and restores its helper values, using <math><mi>s</mi></math> smaller calls of the same kind.</p>
+<p>The saving comes from one strict inequality. The network has <math><mi>W</mi></math> wires, and it handles <math><mi>m</mi></math> times more digits than each smaller call. Each smaller call works on <math><mrow><mn>1</mn><mi>/</mi><mi>W</mi></mrow></math> of the data, so the work per digit grows by <math><mrow><mi>s</mi><mi>/</mi><mi>W</mi></mrow></math> at each level. The paper's networks have <math><mrow><mi>s</mi><mi>/</mi><mi>W</mi></mrow></math> less than <span class="ai-math-nobreak"><math><mi>m</mi></math>.</span> For example, if <math><mi>m</mi></math> were 2 and <math><mrow><mi>s</mi><mi>/</mi><mi>W</mi></mrow></math> were 1.9, then 10 levels would cost about 613 instead of 1,024. Used inside itself again and again, this gap becomes the saving <math><msup><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mrow><mi>log</mi><mo>⁡</mo><mspace width="0.1667em"></mspace></mrow><mi>n</mi><mo fence="true" form="postfix" stretchy="false">)</mo></mrow><mi>κ</mi></msup></math> of the result.</p>
+<p>The rest of the proof fits these procedures into the full method and accounts for every step. It places the pieces on several axes whose lengths are primes, by the Chinese remainder theorem, and reshapes those axes to powers of 2. It tracks every rounding error, and it shows that each computed part of the product is within 1/2 of the true whole number. Rounding then gives the exact parts, and carrying between digits finishes the product.</p>
+<p>The paper says that its fixed numbers are extremely large, so the method shows a count of steps, not a practical program. <a href="https://github.com/openai/math/blob/main/preprints/Integer-multiplication-below-n-log-n-September-23-2026/paper.pdf">OpenAI reports</a> the paper, from an unreleased AI model. A public project reports a complete proof in Lean, for its own version of the method. Lean is a computer program that checks each step of a proof.</p>
+      </article>
+    </main>
+  </body>
+</html>

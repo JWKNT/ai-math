@@ -19,6 +19,13 @@
 .ai-math-article dfn { font-style: italic; }
 .ai-math-nobreak { white-space: nowrap; }
 
+/* Two views of one result, as two square buttons under the title. */
+.ai-math-views { display: flex; flex-wrap: wrap; gap: .5rem; margin: -.25rem 0 1.25rem; }
+.ai-math-views a { display: inline-flex; align-items: center; min-height: 2.75rem; padding: .35rem .9rem; border: 1px solid var(--line-strong); color: var(--ink); font: var(--text-ui)/1.3 var(--ui, var(--serif)); text-decoration: none; }
+.ai-math-views a:hover { border-color: var(--blue); color: var(--blue-dark); }
+.ai-math-views a[aria-current="page"] { border-color: var(--blue); background: var(--surface-blue); color: var(--blue-dark); }
+@media print { .ai-math-views { display: none; } }
+
 /* The margin figure sits in the text flow on a narrow screen. */
 .ai-math-side { margin: 1.25rem 0 1.4rem; font-size: 1rem; }
 .ai-math-side svg { display: block; width: 100%; max-width: 24rem; height: auto; max-height: 19rem; }

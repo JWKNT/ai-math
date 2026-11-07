@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="How the calculation works: Nine-Loop Amplitude, in plain language.">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Nine-Loop Amplitude: how the calculation works">
+    <meta property="og:description" content="How the calculation works: Nine-Loop Amplitude, in plain language.">
+    <meta property="og:url" content="https://jehlp.net/ai-math/nine-loop-amplitude/proof/">
+    <meta property="og:site_name" content="jehlp.net">
+    <meta name="theme-color" content="#fbfaf7">
+    <link rel="canonical" href="https://jehlp.net/ai-math/nine-loop-amplitude/proof/">
+    <title>Nine-Loop Amplitude · How the calculation works · AI Math Results · jehlp.net</title>
+    <link rel="icon" href="https://jehlp.net/site-theme/v2/favicons/ai-math.png" type="image/png">
+    <script src="https://jehlp.net/site-theme/v2/theme.js?v=20261009-reading-folio"></script>
+    <link rel="stylesheet" href="https://jehlp.net/site-theme/v2/base.css?v=20261009-reading-folio">
+    <link rel="stylesheet" href="https://jehlp.net/site-theme/v2/components.css?v=20261105-math3">
+    <link rel="stylesheet" href="../../assets/styles.css?v=20261107-proofs">
+    <script src="https://jehlp.net/site-theme/v2/components.js?v=20261105-math3" defer></script>
+  </head>
+  <body data-site-tone="blue">
+    <a class="skip-link" href="#explainer">Skip to the explanation</a>
+    <header class="site-header site-header--identity">
+      <div class="site-brand"><img class="site-mark" src="https://jehlp.net/site-theme/v2/marks/ai-math.png" width="32" height="32" alt=""><span class="site-title">AI Math Results</span></div>
+      <nav aria-label="Site links"><a href="../../">All results</a><span class="site-utility-pair"><a class="site-home" href="https://jehlp.net/" aria-label="Home — jehlp.net" title="Home — jehlp.net"><span aria-hidden="true">✳</span></a><button class="theme-toggle" type="button" data-theme-toggle aria-label="Use dark theme" aria-pressed="false">◐</button></span></nav>
+    </header>
+    <main id="explainer" class="ai-math-shell" tabindex="-1">
+      <article class="prose ai-math-article">
+        <h1>Nine-Loop Amplitude</h1>
+        <nav class="ai-math-views" aria-label="Views of this result"><a href="../">What it says</a><a href="./" aria-current="page">How the calculation works</a></nav>
+<p>The amplitude is a number that sets the chance of a scattering result, and the nine-loop term is one part of it. At nine loops there are far too many Feynman diagrams to add up. So the calculation guesses the form of the answer instead, and then removes every guess that breaks a known rule. This method is called a <dfn>bootstrap</dfn>.</p>
+<p>The guess is a sum of words, as the <a href="../">result page</a> explains, with an unknown fraction in front of each word. Rules about where the amplitude can jump, and about which characters may stand side by side, cut down the possible words. At nine loops each word has 18 characters. The difficulty is size: the step that settles the full answer starts with 2,302,744 unknown numbers.</p>
+<p>The calculation begins with a simpler cousin, the <dfn>form factor</dfn>, whose words use only 6 characters. It bootstraps the nine-loop form factor first. A rule called antipodal duality then says that the form factor, read backwards, gives the amplitude on one special surface. Each word is reversed, and its characters are renamed. So the form factor fixes the amplitude on that surface.</p>
+<p>From there the calculation extends the answer to every input. It solves for the 2,302,744 unknowns in five layers, and the rules leave 8 free directions. A known limit at one point, called the origin, removes 3 of them. Predictions from the flux tube, a picture of the scattering when two of the particles nearly line up, remove the other 5. So the count of free directions falls from 8 to 5, then 3, then 1, and then 0.</p>
+<p>All the arithmetic uses whole numbers modulo a large prime, so no fraction is ever rounded. Modulo 7, for example, the fraction 1/2 is 4, because <span class="ai-math-nobreak"><math><mrow><mn>2</mn><mo>×</mo><mn>4</mn><mo>=</mo><mn>8</mn></mrow></math>,</span> which is 1 more than 7. The whole chain ran twice, modulo 2,147,483,647 and modulo 2,147,483,629. The two remainders then give back each fraction whose top and bottom are both below <span class="ai-math-nobreak"><math><msup><mn>2</mn><mn>30</mn></msup></math>,</span> which is about a billion.</p>
+<p>The checks come from several sides. Conditions that the solving did not use still hold for the answer. The same steps give back the known results at lower loops. A separate bootstrap, done directly with the 9 characters of the amplitude, agrees with the result. As the result page says, this is a calculation that assumes the same rules still hold at nine loops, not a proof.</p>
+      </article>
+    </main>
+  </body>
+</html>

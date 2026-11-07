@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="How the proof works: Aaronson–Ambainis Conjecture, in plain language.">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Aaronson–Ambainis Conjecture: how the proof works">
+    <meta property="og:description" content="How the proof works: Aaronson–Ambainis Conjecture, in plain language.">
+    <meta property="og:url" content="https://jehlp.net/ai-math/aaronson-ambainis/proof/">
+    <meta property="og:site_name" content="jehlp.net">
+    <meta name="theme-color" content="#fbfaf7">
+    <link rel="canonical" href="https://jehlp.net/ai-math/aaronson-ambainis/proof/">
+    <title>Aaronson–Ambainis Conjecture · How the proof works · AI Math Results · jehlp.net</title>
+    <link rel="icon" href="https://jehlp.net/site-theme/v2/favicons/ai-math.png" type="image/png">
+    <script src="https://jehlp.net/site-theme/v2/theme.js?v=20261009-reading-folio"></script>
+    <link rel="stylesheet" href="https://jehlp.net/site-theme/v2/base.css?v=20261009-reading-folio">
+    <link rel="stylesheet" href="https://jehlp.net/site-theme/v2/components.css?v=20261105-math3">
+    <link rel="stylesheet" href="../../assets/styles.css?v=20261107-proofs">
+    <script src="https://jehlp.net/site-theme/v2/components.js?v=20261105-math3" defer></script>
+  </head>
+  <body data-site-tone="blue">
+    <a class="skip-link" href="#explainer">Skip to the explanation</a>
+    <header class="site-header site-header--identity">
+      <div class="site-brand"><img class="site-mark" src="https://jehlp.net/site-theme/v2/marks/ai-math.png" width="32" height="32" alt=""><span class="site-title">AI Math Results</span></div>
+      <nav aria-label="Site links"><a href="../../">All results</a><span class="site-utility-pair"><a class="site-home" href="https://jehlp.net/" aria-label="Home — jehlp.net" title="Home — jehlp.net"><span aria-hidden="true">✳</span></a><button class="theme-toggle" type="button" data-theme-toggle aria-label="Use dark theme" aria-pressed="false">◐</button></span></nav>
+    </header>
+    <main id="explainer" class="ai-math-shell" tabindex="-1">
+      <article class="prose ai-math-article">
+        <h1>Aaronson–Ambainis Conjecture</h1>
+        <nav class="ai-math-views" aria-label="Views of this result"><a href="../">What it says</a><a href="./" aria-current="page">How the proof works</a></nav>
+<p>A <dfn>polynomial</dfn> is a formula that only adds and multiplies numbers and variables. Here the variables are bits, the degree is <span class="ai-math-nobreak"><math><mi>d</mi></math>,</span> and the values stay between −1 and 1. The <dfn>influence</dfn> of a bit is the average squared change in the value when that one bit flips. The proof must find one bit whose influence is not too small, whatever the number of bits.</p>
+<p>Earlier work handled the polynomial one term at a time, and its limits became exponentially smaller as the degree grew. This proof looks at each list of bits on its own instead. It asks how far the value can move from there when some bits flip, and it builds the answer from yes or no questions. The plan comes from Shachar Lovett and Jiapeng Zhang, who left one step of it open.</p>
+<p>The first step uses a fact from 1889 about polynomials in one variable, due to Andrey Markov. Suppose such a polynomial has degree <math><mi>d</mi></math> and stays between −1 and 1 for the inputs from −1 to 1. Then its slope there is at most <span class="ai-math-nobreak"><math><msup><mi>d</mi><mn class="tml-lrg-pad">2</mn></msup></math>.</span> For example, <math><mrow><mn>2</mn><msup><mi>x</mi><mn class="tml-sml-pad">2</mn></msup><mo>−</mo><mn>1</mn></mrow></math> stays in that range, and its slope at <math><mrow><mi>x</mi><mo>=</mo><mn>1</mn></mrow></math> is 4, which is <span class="ai-math-nobreak"><math><msup><mn>2</mn><mn>2</mn></msup></math>.</span> The paper turns this fact into weights on the bits at each list, which add up to at most <span class="ai-math-nobreak"><math><mrow><msup><mi>π</mi><mn>2</mn></msup><msup><mi>d</mi><mn class="tml-lrg-pad">2</mn></msup></mrow></math>.</span> A flip of some bits then changes the value by at most their total weight.</p>
+<p>Next the proof cuts the polynomial into yes or no questions. For a level <span class="ai-math-nobreak"><math><mi>t</mi></math>,</span> ask whether the value is above <span class="ai-math-nobreak"><math><mi>t</mi></math>.</span> At a list whose value is far from <span class="ai-math-nobreak"><math><mi>t</mi></math>,</span> many bits must flip before the answer changes. The weights from the first step, divided by the distance to <span class="ai-math-nobreak"><math><mi>t</mi></math>,</span> show which bits can change it. The paper calls such weights a certificate of the answer at that list.</p>
+<p>The main new step is an inequality about one yes or no question. It compares the certificates at every pair of lists with different answers, and it shows that some bit often changes the answer. The proof pairs up the lists with the answer yes, so that each list moves across the bits that its certificate marks. Each bit must also stay unchanged in only a few of the pairs. Without that last condition, such a pairing is the Butterfly Lemma of David Reimer. He used it in 2000 to prove a conjecture of Jacob van den Berg and Harry Kesten.</p>
+<p>The pairing comes from algebra. The proof builds a square table from the yes lists, with one variable for each bit. It shows that the sum over all matchings of rows to columns, which gives the determinant of the table, is not zero. So some matchings contribute to the sum, and the proof shows that one of them pairs the lists as needed.</p>
+<p>The rest is careful adding up. The proof uses the inequality at every level <math><mi>t</mi></math> and adds over all levels. A level between two values contributes a share, and the shares add up to the cube of the gap between the values, divided by 6. This gives a bit that changes the value by a fair amount on average. A last averaging step turns that average change into the squared change that defines influence.</p>
+<p>The result is that some bit has influence at least a fixed number times <span class="ai-math-nobreak"><math><mrow><msup><mi>v</mi><mrow class="tml-sml-pad"><mn>5</mn><mi>/</mi><mn>2</mn></mrow></msup><mi>/</mi><msup><mi>d</mi><mn class="tml-lrg-pad">6</mn></msup></mrow></math>.</span> Here <math><mi>v</mi></math> is the variance, which measures how much the value varies. The exponent 7 of the <a href="../">result</a> follows from this. The paper says that every step is elementary: algebra with polynomials, standard inequalities for sums, Markov's fact and integrals of polynomials. PSI reports that a non-public Anthropic model found this chain of steps. The proof is also checked in Lean, a computer program that checks each step of a proof.</p>
+      </article>
+    </main>
+  </body>
+</html>

@@ -1,19 +1,28 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import test from 'node:test';
-import { renderAiMath, typesetMath, mathChars, validateAiMath } from '../lib/pages.mjs';
+import { PROOF_LABEL, renderAiMath, typesetMath, mathChars, validateAiMath } from '../lib/pages.mjs';
 import { APSP_EDGES, BUTTERFLY_DIGITS, EHRHART_TRIANGLE, ES_EDGES, ES_TREE, PETERSEN_COVER, PETERSEN_EDGES, SENDOV_ZEROS, UG_CONSTRAINTS, UG_VALUES, ZETA_ZEROS, addPositions, averageCube, butterflyRounds, deltoidNeedle, deltoidPoint, figures, fishnetGraph, k5Color, paleyMatrix, rangePoint, sendovCritical } from '../lib/figures.mjs';
 
 const root = new URL('../', import.meta.url);
 const results = JSON.parse(await readFile(new URL('data/results.json', root), 'utf8'));
 const bodies = Object.fromEntries(await Promise.all(results.map(async ({ slug }) => [slug, await readFile(new URL(`content/${slug}.html`, root), 'utf8')])));
-const pages = renderAiMath(results, bodies);
+const proofFiles = (await readdir(new URL('content/proofs/', root))).filter(name => name.endsWith('.html'));
+const proofs = Object.fromEntries(await Promise.all(proofFiles.map(async name => [name.slice(0, -5), await readFile(new URL(`content/proofs/${name}`, root), 'utf8')])));
+const pages = renderAiMath(results, bodies, proofs);
 const pageOf = slug => pages.find(([path]) => path === `${slug}/index.html`)[1];
 const articleOf = slug => pageOf(slug).split('<article')[1].split('</article>')[0];
+const proofPageOf = slug => pages.find(([path]) => path === `${slug}/proof/index.html`)[1];
+const proofArticleOf = slug => proofPageOf(slug).split('<article')[1].split('</article>')[0];
+// Every page with prose: what each result says, and each proof sketch.
+const writings = [
+  ...results.map(({ slug, description }) => ({ name: slug, article: () => articleOf(slug), body: bodies[slug], description })),
+  ...Object.keys(proofs).map(slug => ({ name: `${slug} proof`, article: () => proofArticleOf(slug), body: proofs[slug], description: '' })),
+];
 
 test('the committed pages are the deterministic build of the data and bodies', async () => {
   for (const [path, html] of pages) assert.equal(await readFile(new URL(path, root), 'utf8'), html, `Run node build.mjs after changing ${path}.`);
-  assert.deepEqual(pages, renderAiMath(results, bodies));
+  assert.deepEqual(pages, renderAiMath(results, bodies, proofs));
 });
 
 test('the landing page is a list of titles and nothing else', () => {
@@ -40,11 +49,32 @@ test('each explainer is a title, plain paragraphs and one margin figure', () => 
   }
 });
 
-const plain = html => html.replace(/<svg[\s\S]*?<\/svg>/g, ' ').replace(/<math[\s\S]*?<\/math>/g, 'X').replace(/<[^>]+>/g, ' ').replace(/&[a-z#0-9]+;/g, ' ').replace(/\s+/g, ' ').trim();
-test('each explainer has 400 to 800 words', () => {
-  for (const { slug } of results) {
-    const words = plain(articleOf(slug)).split(' ').length;
-    assert.ok(words >= 400 && words <= 800, `${slug} has ${words} words`);
+test('a proof sketch is a second view of its result, with a button each way', () => {
+  for (const { slug, title } of results) {
+    const page = pageOf(slug);
+    if (!proofs[slug]) {
+      assert.doesNotMatch(page, /ai-math-views/, `${slug} has no proof sketch, so it has no button`);
+      continue;
+    }
+    const proof = proofPageOf(slug), article = proofArticleOf(slug), label = results.find(r => r.slug === slug).proofLabel ?? PROOF_LABEL;
+    assert.match(page, new RegExp(`<h1>[^<]*(?:<span[^>]*>[^<]*</span>[^<]*)*</h1>\\s*<nav class="ai-math-views" aria-label="Views of this result"><a href="\\./" aria-current="page">What it says</a><a href="proof/">${label}</a></nav>`), slug);
+    assert.match(proof, new RegExp(`<link rel="canonical" href="https://jehlp\\.net/ai-math/${slug}/proof/">`));
+    assert.match(proof, /<nav aria-label="Site links"><a href="\.\.\/\.\.\/">All results<\/a>/);
+    assert.match(proof, /href="\.\.\/\.\.\/assets\/styles\.css\?v=/);
+    assert.match(proof, new RegExp(`<nav class="ai-math-views" aria-label="Views of this result"><a href="\\.\\./">What it says</a><a href="\\./" aria-current="page">${label}</a></nav>`), slug);
+    assert.equal((proof.match(/<h1[ >]/g) || []).length, 1, slug);
+    assert.ok(proof.includes(`<h1>${mathChars(title)}</h1>`), slug);
+    assert.doesNotMatch(article, /<h[2-6][ >]|<dl|site-divider|class="lede"/, slug);
+    assert.doesNotMatch(article, /\bSources\b|\bStatus\b|Peer review|Why the result matters/, slug);
+    assert.ok((article.match(/class="ai-math-side"/g) || []).length <= 1, slug);
+  }
+});
+
+const plain = html => html.replace(/<svg[\s\S]*?<\/svg>/g, ' ').replace(/<math[\s\S]*?<\/math>/g, 'X').replace(/<nav[\s\S]*?<\/nav>/g, ' ').replace(/<[^>]+>/g, ' ').replace(/&[a-z#0-9]+;/g, ' ').replace(/\s+/g, ' ').trim();
+test('each explainer and each proof sketch has 400 to 800 words', () => {
+  for (const { name, article } of writings) {
+    const words = plain(article()).split(' ').length;
+    assert.ok(words >= 400 && words <= 800, `${name} has ${words} words`);
   }
 });
 
@@ -72,14 +102,23 @@ test('validation rejects a heading, a missing figure, an unknown figure, a repea
   assert.throws(() => validateAiMath(one, { [slug]: `${good}<a href="../../${slug}/">x</a>` }), /Broken link/);
   assert.doesNotThrow(() => validateAiMath(one, { [slug]: `${good}<a href="../${slug}/">x</a>` }));
   assert.throws(() => validateAiMath(one, {}), /Missing body/);
+  // A proof sketch has at most one figure, and its links are one level deeper.
+  const sketch = '<p>Plain text. <a href="../">The result</a> and <a href="https://example.com/">a source</a>.</p>';
+  assert.doesNotThrow(() => validateAiMath(one, { [slug]: good }, { [slug]: sketch }));
+  assert.doesNotThrow(() => validateAiMath(one, { [slug]: good }, { [slug]: `${sketch}<a href="../../${slug}/">x</a>` }));
+  assert.throws(() => validateAiMath(one, { [slug]: good }, { [slug]: `${sketch}<a href="../${slug}/">x</a>` }), /Broken link/);
+  assert.throws(() => validateAiMath(one, { [slug]: good }, { [slug]: `<h2>Idea</h2>${sketch}` }), /has a heading/);
+  const twoFigures = '<figure class="ai-math-side">{{fig:shadow}}</figure>'.repeat(2);
+  assert.throws(() => validateAiMath(one, { [slug]: good }, { [slug]: sketch + twoFigures }), /at most one margin figure/);
+  assert.throws(() => validateAiMath(one, { [slug]: good }, { 'no-such-result': sketch }), /Proof without a result/);
 });
 
 // A screen, not a certification: STE counts names and formulas in its own way.
 const sentences = text => text.replace(/\b(\d)\.(\d)/g, '$1_$2').split(/(?<=[.!?:])\s+(?=[A-Z"X(])/).filter(s => /\w/.test(s));
 test('original prose stays within the writing policy limits', () => {
   const problems = [];
-  for (const { slug } of results) {
-    for (const [, , inner] of articleOf(slug).matchAll(/<(p|figcaption)(?: [^>]*)?>([\s\S]*?)<\/\1>/g)) {
+  for (const { name: slug, article } of writings) {
+    for (const [, , inner] of article().matchAll(/<(p|figcaption)(?: [^>]*)?>([\s\S]*?)<\/\1>/g)) {
       const block = plain(inner);
       if (block.includes(';')) problems.push(`${slug}: semicolon in "${block.slice(0, 70)}"`);
       if (block.includes('?')) problems.push(`${slug}: question in "${block.slice(0, 70)}"`);
@@ -110,14 +149,14 @@ const OFF_STANDARD = /\b(?:letters|integers?|rational|coefficients?|algorithms?|
 
 test('every page stands alone on one baseline, with one set of definitions and words', () => {
   const problems = [];
-  for (const { slug, description } of results) {
-    const body = withoutLinks(bodies[slug]);
+  for (const { name: slug, article, body: source, description } of writings) {
+    const body = withoutLinks(source);
     for (const [use, definition] of STANDARD_DEFINITIONS) {
       const defined = typeof definition === 'string' ? body.includes(definition) : definition.test(body);
       if (use.test(body) && !defined) problems.push(`${slug} uses ${use} without the standard definition`);
     }
     // The figure labels and the page description count too: readers meet them in screen readers and search results.
-    for (const text of [withoutLinks(articleOf(slug)).replace(/<math[\s\S]*?<\/math>/g, ' '), description]) {
+    for (const text of [withoutLinks(article()).replace(/<math[\s\S]*?<\/math>/g, ' '), description]) {
       const word = text.match(OFF_STANDARD);
       if (word) problems.push(`${slug} says "${word[0]}"`);
     }
@@ -692,6 +731,47 @@ test('Aaronson–Ambainis page: the influences, the variances and the cube hold'
   assert.equal(new Set(corners.map(bits => bits.join(''))).size, 8);
   for (const bits of corners.filter(bits => bits[0] === 0)) assert.ok(average(flip(bits, 0)).sub(average(bits)).eq(Q.of(1, 3)));
   quotes('aaronson-ambainis', '\\(1/3\\)', '\\(1/9\\)', '\\(1/12\\)', '\\(1/N^2\\)', '\\(1/(4N)\\)', '0.0001', '0.0025', '16 times the square', '(\\varepsilon/d)^C', '\\(C = 7\\)', '\\(2T\\)');
+});
+
+// Exact checks for the numbers that the proof sketches quote.
+const proofQuotes = (slug, ...values) => { for (const value of values) assert.ok(proofs[slug].includes(value), `${slug} proof quotes ${value}`); };
+test('proof sketches: the quoted numbers hold', () => {
+  // Aaronson–Ambainis: 2x^2 - 1 stays between -1 and 1 on [-1, 1], with slope 4 = 2^2 at x = 1.
+  for (let k = -100; k <= 100; k++) { const x = Q.of(k, 100), y = Q.of(2).mul(x.pow(2)).sub(Q.of(1)); assert.ok(y.n >= -y.d && y.n <= y.d); }
+  assert.equal(4 * 1, 2 ** 2);
+  // The shares of the levels between two values with gap D add up to the integral of (D - u)u, which is D^3/6.
+  for (const D of [1, 2, 3, 7]) assert.ok(Q.of(D).mul(Q.of(D * D, 2)).sub(Q.of(D ** 3, 3)).eq(Q.of(D ** 3, 6)));
+  proofQuotes('aaronson-ambainis', '\\(2x^2 - 1\\)', 'slope at \\(x = 1\\) is 4', '\\(\\pi^2 d^2\\)', 'divided by 6', '\\(v^{5/2}/d^6\\)');
+  // ℤ in ℚ: a fraction a/b in lowest terms that is not the whole number n is at least 1/b from it.
+  for (let b = 1; b <= 30; b++) for (let a = -60; a <= 60; a++) {
+    const t = Q.of(a, b);
+    if (t.d !== BigInt(b)) continue;
+    for (let n = -3; n <= 3; n++) if (!t.eq(Q.of(n))) { const gap = t.sub(Q.of(n)); assert.ok((gap.n < 0n ? -gap.n : gap.n) * BigInt(b) >= gap.d); }
+  }
+  assert.ok(Q.of(1).sub(Q.of(99, 100)).eq(Q.of(1, 100)));
+  proofQuotes('z-diophantine-in-q', '\\(99/100\\)', '\\(1/100\\)', '\\(e^{-B}\\)');
+  // Connes: the carry rule has an action of order exactly 4, and the plain rule has none.
+  const plainSum = (p, q) => addPositions(false, p, q), carrySum = (p, q) => addPositions(true, p, q);
+  const order = (add, p) => { let s = p, k = 1; while (s[0] || s[1]) { s = add(s, p); k++; } return k; };
+  assert.equal(order(carrySum, [1, 0]), 4);
+  assert.ok([[1, 0], [0, 1], [1, 1]].every(p => order(plainSum, p) === 2));
+  proofQuotes('connes-rigidity', 'exactly 4 repeats', '4 × 4 tables');
+  // Nine loops: 1/2 is 4 modulo 7, and two 31-bit primes recover a fraction with top and bottom below 2^30.
+  assert.equal((2 * 4) % 7, 1);
+  const [p1, p2] = [2147483647n, 2147483629n];
+  assert.equal(p1, 2n ** 31n - 1n);
+  assert.ok(2n * (2n ** 30n) ** 2n < p1 * p2);
+  assert.equal(Math.round(2 ** 30 / 1e9), 1);
+  proofQuotes('nine-loop-amplitude', '2,302,744', 'from 8 to 5, then 3, then 1, and then 0', '\\(2 \\times 4 = 8\\)', '2,147,483,647', '2,147,483,629', '\\(2^{30}\\)');
+  // Multiplication: modulo y^4 + 1, multiplying by y shifts the list and negates the entry that wraps, and 8 shifts give it back.
+  const shift = list => [-list.at(-1), ...list.slice(0, -1)];
+  assert.deepEqual(shift([1, 2, 3, 4]), [-4, 1, 2, 3]);
+  let list = [1, 2, 3, 4];
+  for (let k = 0; k < 8; k++) list = shift(list);
+  assert.deepEqual(list, [1, 2, 3, 4]);
+  assert.equal(Math.round(1.9 ** 10), 613);
+  assert.equal(2 ** 10, 1024);
+  proofQuotes('multiplication-below-n-log-n', '\\((1, 2, 3, 4)\\)', '\\((-4, 1, 2, 3)\\)', '8 such shifts', 'about 613 instead of 1,024', 'within 1/2');
 });
 
 test('figures are named, stay on theme tokens and contain no raw color', async () => {

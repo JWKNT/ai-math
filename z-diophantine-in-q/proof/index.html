@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="How the proof works: ℤ is Diophantine in ℚ, in plain language.">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="ℤ is Diophantine in ℚ: how the proof works">
+    <meta property="og:description" content="How the proof works: ℤ is Diophantine in ℚ, in plain language.">
+    <meta property="og:url" content="https://jehlp.net/ai-math/z-diophantine-in-q/proof/">
+    <meta property="og:site_name" content="jehlp.net">
+    <meta name="theme-color" content="#fbfaf7">
+    <link rel="canonical" href="https://jehlp.net/ai-math/z-diophantine-in-q/proof/">
+    <title>ℤ is Diophantine in ℚ · How the proof works · AI Math Results · jehlp.net</title>
+    <link rel="icon" href="https://jehlp.net/site-theme/v2/favicons/ai-math.png" type="image/png">
+    <script src="https://jehlp.net/site-theme/v2/theme.js?v=20261009-reading-folio"></script>
+    <link rel="stylesheet" href="https://jehlp.net/site-theme/v2/base.css?v=20261009-reading-folio">
+    <link rel="stylesheet" href="https://jehlp.net/site-theme/v2/components.css?v=20261105-math3">
+    <link rel="stylesheet" href="../../assets/styles.css?v=20261107-proofs">
+    <script src="https://jehlp.net/site-theme/v2/components.js?v=20261105-math3" defer></script>
+  </head>
+  <body data-site-tone="blue">
+    <a class="skip-link" href="#explainer">Skip to the explanation</a>
+    <header class="site-header site-header--identity">
+      <div class="site-brand"><img class="site-mark" src="https://jehlp.net/site-theme/v2/marks/ai-math.png" width="32" height="32" alt=""><span class="site-title">AI Math Results</span></div>
+      <nav aria-label="Site links"><a href="../../">All results</a><span class="site-utility-pair"><a class="site-home" href="https://jehlp.net/" aria-label="Home — jehlp.net" title="Home — jehlp.net"><span aria-hidden="true">✳</span></a><button class="theme-toggle" type="button" data-theme-toggle aria-label="Use dark theme" aria-pressed="false">◐</button></span></nav>
+    </header>
+    <main id="explainer" class="ai-math-shell" tabindex="-1">
+      <article class="prose ai-math-article">
+        <h1><span class="ui-math-char">ℤ</span> is Diophantine in <span class="ui-math-char">ℚ</span></h1>
+        <nav class="ai-math-views" aria-label="Views of this result"><a href="../">What it says</a><a href="./" aria-current="page">How the proof works</a></nav>
+<p>The proof must produce equations that whole numbers can satisfy and other fractions cannot. Equations can only add and multiply, so they cannot look at a denominator directly. The proof first builds a copy of the whole numbers out of fractions, where arithmetic is easy to state. Then it ties each number in the copy to an ordinary fraction.</p>
+<p>The copy lives on an <dfn>elliptic curve</dfn>, a curve of the form <math><mrow><msup><mi>y</mi><mn class="tml-sml-pad">2</mn></msup><mo>=</mo><msup><mi>x</mi><mn class="tml-sml-pad">3</mn></msup><mo>+</mo><mi>a</mi><mi>x</mi><mo>+</mo><mi>b</mi></mrow></math> for fixed numbers <math><mi>a</mi></math> and <span class="ai-math-nobreak"><math><mi>b</mi></math>.</span> Two points on such a curve can be added by a formula that only adds, multiplies and divides. The paper uses one such curve and one point <math><mi>P</mi></math> on it. Adding <math><mi>P</mi></math> to itself <math><mi>n</mi></math> times gives a point <span class="ai-math-nobreak"><math><mrow><mi>n</mi><mi>P</mi></mrow></math>.</span> The paper proves that a certain set of points is exactly the set of these multiples. So the point <math><mrow><mi>n</mi><mi>P</mi></mrow></math> stores the whole number <span class="ai-math-nobreak"><math><mi>n</mi></math>,</span> and its coordinates are made of fractions.</p>
+<p>Adding stored numbers is easy, because adding two points adds their numbers. Multiplying them is much harder. The paper builds a large block of equations that has solutions exactly when three stored numbers are <span class="ai-math-nobreak"><math><mi>a</mi></math>,</span> <math><mi>b</mi></math> and <span class="ai-math-nobreak"><math><mrow><mi>a</mi><mi>b</mi></mrow></math>.</span> Its proof uses estimates of how fast the coordinates of <math><mrow><mi>n</mi><mi>P</mi></mrow></math> grow, and conditions at chosen primes. With addition and multiplication, any fixed computation on whole numbers can be written as equations, as in the proof of Hilbert's tenth problem.</p>
+<p>The last step ties a stored number <math><mi>n</mi></math> to the input fraction <span class="ai-math-nobreak"><math><mi>q</mi></math>.</span> A first test makes the equations compute, from points, a fraction within <math><msup><mi>e</mi><mrow class="tml-sml-pad"><mo form="prefix" stretchy="false" lspace="0em" rspace="0em">−</mo><mi>B</mi></mrow></msup></math> of <span class="ai-math-nobreak"><math><mi>n</mi></math>,</span> and it requires <math><mi>q</mi></math> to be just as close. Here <math><mi>B</mi></math> grows with a second stored number, which the equations may choose freely. A second test works prime by prime. It connects the size of the numbers in <math><mi>q</mi></math> to that same choice.</p>
+<p>Together the two tests leave no room. A fraction <math><mrow><mi>a</mi><mi>/</mi><mi>b</mi></mrow></math> in lowest terms that is not the whole number <math><mi>n</mi></math> differs from it by at least <span class="ai-math-nobreak"><math><mrow><mn>1</mn><mi>/</mi><mi>b</mi></mrow></math>.</span> For example, <math><mrow><mn>99</mn><mi>/</mi><mn>100</mn></mrow></math> differs from 1 by exactly <span class="ai-math-nobreak"><math><mrow><mn>1</mn><mi>/</mi><mn>100</mn></mrow></math>.</span> The second test, with a height estimate in the paper, keeps both <math><mi>a</mi></math> and <math><mi>b</mi></math> below <span class="ai-math-nobreak"><math><msup><mi>e</mi><mi class="tml-sml-pad">B</mi></msup></math>.</span> So a fraction within <math><msup><mi>e</mi><mrow class="tml-sml-pad"><mo form="prefix" stretchy="false" lspace="0em" rspace="0em">−</mo><mi>B</mi></mrow></msup></math> of <math><mi>n</mi></math> must be <math><mi>n</mi></math> itself.</p>
+<p>The height estimate is the deepest part of the paper. It shows that a fraction cannot be large unless it comes very close, at many primes, to one of six fixed numbers. The second test lets the equations check those primes. For the other direction, the paper shows that every whole number has a suitable second stored number, so that each whole number passes both tests.</p>
+<p>Finally the paper merges all the equations into one. A sum of squares is zero only when each square is zero, so many equations become one. Extra variables stand for products of two variables, and they bring the highest power down to 4. The paper builds on <a href="../../hilberts-tenth-problem/">OpenAI's proof about Hilbert's tenth problem over the fractions</a>, and its newer versions shrink the same plan.</p>
+      </article>
+    </main>
+  </body>
+</html>
